@@ -1,0 +1,8 @@
+
+.bg-banner-blue {
+    background-image: url('../public/assets/img/bg-v1.png');
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 50%;
+}
+  
