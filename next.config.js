@@ -13,6 +13,16 @@ const nextConfig = {
         destination: '/auth/Register'
       }
     ]
+  },
+  // async redirect () {
+  //   return [
+  //     {
+
+  //     }
+  //   ]
+  // }
+  env: {
+    BASE_URL: 'https://fazzpay.herokuapp.com'
   }
 }
 

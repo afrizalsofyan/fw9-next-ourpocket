@@ -4,15 +4,18 @@ import Link from "next/link";
 import React from "react";
 import { Alert, Col, Form, Row } from "react-bootstrap";
 import { FiEye, FiEyeOff, FiLock, FiMail } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import AuthLayout from "../../components/AuthLayout";
 import { ButtonSubmit } from "../../components/ButtonAuth";
 import InputField from "../../components/InputField";
 import TitleAuthForm from "../../components/TitleAuthForm";
+import {useRouter} from 'next/router';
+import {login} from '../../redux/actionAsync/auth';
 
 const loginSheme = Yup.object().shape({
   email: Yup.string().email("invalid email address format").required(),
-  password: Yup.string().min(4).required(),
+  password: Yup.string().min(3).required(),
 });
 
 
@@ -80,31 +83,30 @@ const AuthForm = ({errors, handleSubmit, handleChange}) => {
   };
 
 function Login() {
-  // const location = useLocation();
-  // const redirect = useNavigate();
-  // const dispatch = useDispatch();
-  // const token = useSelector((state)=> state.auth.token);
+  const navigate = useRouter();
+  const dispatch = useDispatch();
+  const token = useSelector((state)=> state.auth.token);
 
-  const [visible, setVisible] = React.useState(false);
+  // const [visible, setVisible] = React.useState(false);
 
-  const handleVisible = () => {
-    setVisible(true);
-    setTimeout(() => {
-      setVisible(false);
-    }, 4000);
-  };
+  // const handleVisible = () => {
+  //   setVisible(true);
+  //   setTimeout(() => {
+  //     setVisible(false);
+  //   }, 4000);
+  // };
 
   const testLogin = (value) => {
-    //   const data = {email: value.email, password: value.password};
-    //   dispatch(login(data));
+    const data = {email: value.email, password: value.password};
+    dispatch(login(data));
   };
 
-  // React.useEffect(()=>{
-  //   if(token){
-  //     redirect('/home/dashboard');
-  //   }
-  //   handleVisible();
-  // }, [redirect, token]);
+  React.useEffect(()=>{
+    if(token){
+      navigate.push('/dashboard');
+    }
+    // handleVisible();
+  }, [navigate, token]);
 
   return (
     <AuthLayout>
