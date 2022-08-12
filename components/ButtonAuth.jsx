@@ -7,14 +7,16 @@ export const ButtonMenuProfile = ({menuName, suffixIcon, to}) => {
   return (
     <Link
       href={to}
-      className='btn bg-btn-profile px-4 py-3'
+      
     >
-      <div className='d-flex flex-row justify-content-between'>
-        <span className='color-btn-text-profile fw-semibold fs-6'>
-          {menuName}
-        </span>
-        {suffixIcon !== null ? suffixIcon : null}
-      </div>
+      <a className='btn bg-btn-profile px-4 py-3'>
+        <div className='d-flex flex-row justify-content-between'>
+          <span className='color-btn-text-profile fw-semibold fs-6'>
+            {menuName}
+          </span>
+          {suffixIcon !== null ? suffixIcon : null}
+        </div>
+      </a>
     </Link>
   );
 };

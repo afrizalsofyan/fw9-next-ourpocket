@@ -6,7 +6,8 @@ const initialState  = {
     token: Cookie.get('token') || null,
     errorMsg: null,
     successMsg: null,
-    successCreatePin: null
+    successCreatePin: null,
+    results: {}
 }
 
 const auth = createSlice({
@@ -15,6 +16,7 @@ const auth = createSlice({
     reducers: {
         logout: (state) => {
             Cookie.remove('token');
+            Cookie.remove('id');
             return initialState;
         }
     },
@@ -24,10 +26,13 @@ const auth = createSlice({
             state.successMsg = null;
         }),
         build.addCase(login.fulfilled, (state, action)=> {
-            const token = action.payload?.token;
+            state.results = action.payload?.data;
+            const token = action.payload?.data.token;
+            const id = action.payload?.data.id;
             if(token){
                 state.token = token;
                 Cookie.set('token', token);
+                Cookie.set('id', id)
             } else {
                 state.errorMsg = action.payload?.errorMsg;
                 state.successMsg = action.payload.successMsg;

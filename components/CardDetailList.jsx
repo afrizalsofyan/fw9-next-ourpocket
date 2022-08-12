@@ -1,16 +1,12 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
-export const CardHistoryDashboard = ({imgUrl, name, type, amount}) => {
+export const CardHistoryDashboard = ({imgUrl, name, type, status, amount}) => {
   return (
     <div className='d-flex flex-column gap-3 gap-sm-0 flex-sm-row justify-content-between shadow-sm p-3'>
       <div className='d-flex gap-3'>
         <div>
-          <img
-            className='we-3'
-            src={imgUrl}
-            alt='img1'
-          />
+          {imgUrl}
         </div>
         <div className='d-flex flex-column justify-content-center'>
           <span className='fw-semibold'>{name}</span>
@@ -20,8 +16,8 @@ export const CardHistoryDashboard = ({imgUrl, name, type, amount}) => {
         </div>
       </div>
       <div>
-        <span className={`fw-bold fs-5 ${type === 'transfer' || type === 'subcription' ? 'color-red' : 'color-green'}`}>
-          {type === 'transfer' || type === 'subcription' ? `- ${amount}` : `+ ${amount}`}
+        <span className={`fw-bold fs-5 ${status === 'failed' ? 'color-red' : 'color-green'}`}>
+          {type === 'transfer' ? `- ${amount}` : `+ ${amount}`}
         </span>
       </div>
     </div>

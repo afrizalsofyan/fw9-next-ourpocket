@@ -7,6 +7,9 @@ body{
     font-style: normal !important;
     background: #EFFFFD;
 }
+.content-layout{
+    height: 800px;
+}
 .img-profile-box{
     width: 9em;
     height: 9em;

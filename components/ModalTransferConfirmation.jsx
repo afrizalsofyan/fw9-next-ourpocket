@@ -1,11 +1,10 @@
 import { Formik } from 'formik';
 import React from 'react';
 import { Form, Modal } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import { InputPin } from './InputField';
 // import * as Yup from 'yup';
 import { ButtonSubmit } from './ButtonAuth';
-import { useSelector } from 'react-redux/es/exports';
+import { useSelector } from 'react-redux';
 
 // const changePinSchema = Yup.object().shape({
 //     pin: Yup.array().of(
@@ -86,27 +85,26 @@ const ChangePinForm = ({ errors, handleChange, handleSubmit, show, hide }) => {
 };
 
 function ModalTransferConfirmation({ show, onHide, id }) {
-  const redirect = useNavigate();
-  const checkPin = useSelector((state)=>state.user.pin);
-  const amount = useSelector((state)=> state.inputAmount.amount);
-  const note = useSelector((state)=> state.inputAmount.note);
-  const transferId = useSelector((state)=>state.inputAmount.type_id);
+  // const checkPin = useSelector((state)=>state.user.pin);
+  // const amount = useSelector((state)=> state.inputAmount.amount);
+  // const note = useSelector((state)=> state.inputAmount.note);
+  // const transferId = useSelector((state)=>state.inputAmount.type_id);
   // const data = {note: note, amount: amount, type_id: transferId, recipient_id: id,  sender_id: }
   const onSubmitPin = (val) => {
-    if(val.pin[0] === '' || val.pin[1] === '' || val.pin[2] === '' || val.pin[3] === '' || val.pin[4] === '' || val.pin[5] === ''){
-      window.alert('Value is required');
-    } else {
-      if (isNaN(parseInt(val.pin[0])) === false && isNaN(parseInt(val.pin[1])) === false && isNaN(parseInt(val.pin[2])) === false && isNaN(parseInt(val.pin[3])) === false && isNaN(parseInt(val.pin[4])) === false && isNaN(parseInt(val.pin[5])) === false){
-        const finalPin = val.pin.join('');
-        if (parseInt(finalPin) === checkPin) { 
-          redirect(`/home/transfer/${id}/transfer-confirmation/success`);
-        } else { 
-          redirect(`/home/transfer/${id}/transfer-confirmation/failed`);
-        }
-      } else {
-        window.alert('Please input with only number !!!');
-      }
-    }
+    // if(val.pin[0] === '' || val.pin[1] === '' || val.pin[2] === '' || val.pin[3] === '' || val.pin[4] === '' || val.pin[5] === ''){
+    //   window.alert('Value is required');
+    // } else {
+    //   if (isNaN(parseInt(val.pin[0])) === false && isNaN(parseInt(val.pin[1])) === false && isNaN(parseInt(val.pin[2])) === false && isNaN(parseInt(val.pin[3])) === false && isNaN(parseInt(val.pin[4])) === false && isNaN(parseInt(val.pin[5])) === false){
+    //     const finalPin = val.pin.join('');
+    //     if (parseInt(finalPin) === checkPin) { 
+    //       redirect(`/home/transfer/${id}/transfer-confirmation/success`);
+    //     } else { 
+    //       redirect(`/home/transfer/${id}/transfer-confirmation/failed`);
+    //     }
+    //   } else {
+    //     window.alert('Please input with only number !!!');
+    //   }
+    // }
   };
   return (
     <Formik

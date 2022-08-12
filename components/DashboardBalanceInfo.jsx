@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiArrowUp, FiPlus } from 'react-icons/fi';
-import { Link } from 'next/link';
+import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 // import { getProfile } from '../redux/actionAsync/profile';
 import { convertMoney } from './DetailTransferList';
@@ -8,7 +8,7 @@ import { convertMoney } from './DetailTransferList';
 function DashboardBalanceInfo() {
   // const dispatch = useDispatch();
   // const token = useSelector((state)=> state.auth.token);
-  // const profile = useSelector((state)=> state.profile.result);
+  const profile = useSelector((state)=> state.user?.results);
   // React.useEffect(()=>{
   //   dispatch(getProfile(token));
   // }, [dispatch, token]);
@@ -29,21 +29,23 @@ function DashboardBalanceInfo() {
           <div className='wd-bx-3 bg-color-1 border border-light rounded-3 text-center py-2'>
             <div className=''>
               <Link
-                href='/home/transfer'
-                className='link-rm-line d-flex flex-column flex-sm-row justify-content-between px-3 align-items-center'
+                href='/dashboard/transfer'
               >
-                <FiArrowUp size={24} className='color-text-4' />
-                <span className='color-text-4 fw-bold'>Transfer</span>
+                <a className='link-rm-line d-flex flex-column flex-sm-row justify-content-between px-3 align-items-center'>
+                  <FiArrowUp size={24} className='color-text-4' />
+                  <span className='color-text-4 fw-bold'>Transfer</span>
+                </a>
               </Link>
             </div>
           </div>
           <div className='wd-bx-3 bg-color-1 border border-light rounded-3 text-center py-2'>
             <Link
-              href='/home/topup'
-              className='link-rm-line d-flex flex-column flex-sm-row justify-content-between px-3 align-items-center'
+              href='/dashboard/topup'
             >
-              <FiPlus size={24} className='color-text-4' />
-              <span className='color-text-4 fw-bold'>Top Up</span>
+              <a className='link-rm-line d-flex flex-column flex-sm-row justify-content-between px-3 align-items-center'>
+                <FiPlus size={24} className='color-text-4' />
+                <span className='color-text-4 fw-bold'>Top Up</span>
+              </a>
             </Link>
           </div>
         </div>

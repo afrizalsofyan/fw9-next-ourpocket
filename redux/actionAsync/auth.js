@@ -11,8 +11,9 @@ export const login = createAsyncThunk('auth/login', async (request)=>{
                 'content-type' : 'application/x-www-form-urlencoded'
             }
         });
-        result.token = data.data.token;
-        result.successMsg = data.data.msg;
+        result.data = data.data;
+        result.successMsg = data.msg;
+        result.status = data.status;
         return result;
     } catch (error) {
         result.errorMsg = error.response.data.msg;

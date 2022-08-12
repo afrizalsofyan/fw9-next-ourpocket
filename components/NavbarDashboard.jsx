@@ -1,9 +1,8 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
 // import UserPhoto from '../assets/images/img/img3.png';
 import { FaRegUser } from 'react-icons/fa';
 import { FiBell, FiArrowDown, FiArrowUp } from 'react-icons/fi';
-import { Navbar,  Nav, Alert, DropdownButton, Image } from 'react-bootstrap';
+import { Navbar,  Nav, Alert, DropdownButton, Container } from 'react-bootstrap';
 import {
   NotificationCardHeader,
   NotificationCardItem,
@@ -11,27 +10,29 @@ import {
 import { MenuNavbar } from './SideBarMenu';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-// import { getProfile } from '../redux/actionAsync/profile';
+import { FcManager } from "react-icons/fc";
 import Head from 'next/head';
-
+import { getProfile } from '../redux/actionAsync/profile';
+import Cookie from 'js-cookie';
+import Image from 'next/image';
 
 function NavbarDashboard({ titlePage }) {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const token = useSelector((state) => state.auth.token);
-  // const profile = useSelector((state)=> state.profile.result);
+  const user = useSelector((state)=> state.auth?.results);
+  const profile = useSelector((state)=> state.user?.results)
   // const location = useLocation();
   // const [visible, setVisible] = React.useState(false);
 
-  //willmount just render when first load
-  // React.useEffect(() => {
-  //   dispatch(getProfile(token));
-  //   setVisible(true);
-  //   setTimeout(() => {
-  //     setVisible(false);
-  //   }, 1500);
-  // }, [dispatch, token]);
-  //data profile
-  // const fullNameUser = `${profile?.first_name} ${profile?.last_name}`;
+  React.useEffect(() => {
+    dispatch(getProfile(user.id !== undefined ? user.id : Cookie.get('id')));
+    // setVisible(true);
+    // setTimeout(() => {
+    //   setVisible(false);
+    // }, 1500);
+  }, [dispatch, user]);
+  
+  const fullNameUser = `${profile?.firstName} ${profile?.lastName}`;
   return (
     <>
       <Head>
@@ -43,8 +44,8 @@ function NavbarDashboard({ titlePage }) {
       <Navbar expand='md' className='w-100 bg-color-2 shadow-md cstm-navbar'>
         <Container>
           <Navbar.Brand>
-            <Link href='/dashboard' className='color-text-2 fs-4 fw-bold text-decoration-none'>
-              <a>OurPocket</a>
+            <Link href='/dashboard'>
+              <a className='color-text-2 fs-4 fw-bold text-decoration-none'>OurPocket</a>
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -52,17 +53,16 @@ function NavbarDashboard({ titlePage }) {
             <Nav className='ms-auto d-flex flex-column flex-sm-row gap-3 align-items-center bell-notification py-4'>
               <Link
                 href='/dashboard/profile'
-                className='d-flex d-sm-flex flex-column flex-sm-row gap-3 align-items-center link-rm-line'
               >
-                <div>
+                <a className='d-flex d-sm-flex flex-column flex-sm-row gap-3 align-items-center link-rm-line'>
                   <div className='d-flex img-profile-navbar-box'>
-                    {/* <Image src={`http://${profile?.photo_url}`} alt={fullNameUser} fluid width={100} className='rounded-3'/> */}
+                    {profile?.image !== null ? <Image src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${profile?.image}`} alt={fullNameUser} width={100} height={50} className='rounded-3'/> : <FcManager size={60}/>}
                   </div>
                   <div className='d-flex flex-column color-text-2'>
-                    {/* <span className='fw-bold'>{fullNameUser}</span>
-                    <span className='fw-light'>{profile?.phone_number}</span> */}
+                     <span className='fw-bold'>{fullNameUser}</span>
+                    <span className='fw-light'>{profile?.noTelp}</span>
                   </div>
-                </div>
+                </a>
               </Link>
 
               <DropdownButton
