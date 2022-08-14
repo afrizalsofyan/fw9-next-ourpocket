@@ -1,27 +1,26 @@
 import React from 'react';
-import { Col, Container, Image, Row } from 'react-bootstrap';
+import { Alert, Col, Row } from 'react-bootstrap';
 import Link from 'next/link';
 import ContentLayout from '../../components/ContentLayout';
-import NavbarDashboard from '../../components/NavbarDashboard';
-import SideBarMenu from '../../components/SideBarMenu';
-import FooterDashboard from '../../components/FooterDashboard';
-import Img1 from '../../public/assets/img/img3.png';
 import { FiArrowRight, FiEdit2 } from 'react-icons/fi';
 import { ButtonMenuProfile } from '../../components/ButtonAuth';
-import { useDispatch, useSelector } from 'react-redux';
-// import { getProfile } from '../../redux/actionAsync/profile';
+import { useSelector } from 'react-redux';
+import DashboardLayout from '../../components/DashboardLayout';
+import Image from 'next/image';
+import { FcManager } from 'react-icons/fc';
 
-
-export const HeaderProfile = ({ to, imgUrl, alt, name, phone }) => {
+export const HeaderProfile = ({ to, imgUser, alt, name, phone }) => {
   return (
     <>
       <div className='d-flex flex-column align-items-center gap-3'>
-        <div className='d-flex img-profile-box'>
-          <Image src={imgUrl} alt={alt} fluid className='rounded-4'/>
+        <div className='d-flex justify-content-center img-profile-box'>
+          {imgUser}
         </div>
-        <Link to='/home/profile/edit-profile' className='link-rm-line link-text bg-grey-light d-flex gap-2 align-items-center'>
-          <FiEdit2 size={20}/>
-          <span className='fw-normal'>Edit</span>
+        <Link href='/dashboard/edit-profile'>
+          <a  className='link-rm-line link-text bg-grey-light d-flex gap-2 align-items-center'>
+            <FiEdit2 size={20}/>
+            <span className='fw-normal'>Edit</span>
+          </a>
         </Link>
       </div>
       <div className='d-flex flex-column align-items-center'>
@@ -34,30 +33,35 @@ export const HeaderProfile = ({ to, imgUrl, alt, name, phone }) => {
 
 function Profile() {
   // const dispatch = useDispatch();
-  // const token = useSelector((state)=> state.auth.token);
-  // const profile = useSelector((state)=> state.profile.result);
-
-  // React.useEffect(()=>{
-  //   dispatch(getProfile(token));
-  // }, [dispatch, token]);
-  // const fullNameUser = `${profile.first_name} ${profile.last_name}`;
+  const successMsg = useSelector((state)=> state.user.successMsg);
+  const errorMsg = useSelector((state)=> state.user.errorMsg);
+  const profile = useSelector((state)=> state.user.results);
+  const [show, setShow] = React.useState(false);
+  React.useEffect(()=>{
+    setShow(true);
+    setTimeout(()=>{
+      setShow(false)
+    }, 3000);
+  }, []);
+  const fullNameUser = `${profile.firstName} ${profile.lastName}`;
   return (
     <>
-      <NavbarDashboard titlePage='OPo - profile'/>
-      <Container as='section' className='g-0'>
-        <Row className='pt-5 gx-0 gx-md-3'>
-          <SideBarMenu />
-          <ContentLayout
+      <DashboardLayout>
+      <ContentLayout
             child={
               <>
                 <div className='d-flex flex-column gap-3'>
-                  {/* <HeaderProfile
+                  {errorMsg == null ? successMsg && <Alert variant='success' show={show}>{successMsg}</Alert> : errorMsg && <Alert variant='success' show={show}>{errorMsg}</Alert>}
+                  <HeaderProfile
                     alt={'imgProfile'}
-                    imgUrl={`http://${profile.photo_url}`}
                     name={fullNameUser}
-                    phone={profile.phone_number}
-                    to='/home/profile'
-                  /> */}
+                    phone={profile.noTelp}
+                    to='/dashboard/profile/edit-profile'
+                    imgUser={profile.image != null ? <Image src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${profile.image}`} alt={profile.firstName} width={100} height={100} className='rounded-4'/> : 
+                    <div className='mx-auto'><FcManager size={150} bbox={100} className='border rounded-circle'/></div>
+                    }
+
+                  />
                   <Row>
                     <Col
                       sm={12}
@@ -66,7 +70,7 @@ function Profile() {
                       <div className='d-flex flex-column gap-3 px-2 px-sm-5 w-75'>
                         <ButtonMenuProfile
                           menuName='Personal Information'
-                          to='details'
+                          to='/dashboard/profile/details'
                           suffixIcon={
                             <FiArrowRight
                               size={24}
@@ -76,7 +80,7 @@ function Profile() {
                         />
                         <ButtonMenuProfile
                           menuName='Change Password'
-                          to='change-password'
+                          to='/dashboard/profile/change-password'
                           suffixIcon={
                             <FiArrowRight
                               size={24}
@@ -86,7 +90,7 @@ function Profile() {
                         />
                         <ButtonMenuProfile
                           menuName='Change PIN'
-                          to='change-pin'
+                          to='/dashboard/profile/change-pin'
                           suffixIcon={
                             <FiArrowRight
                               size={24}
@@ -96,7 +100,7 @@ function Profile() {
                         />
                         <ButtonMenuProfile
                           menuName='Logout'
-                          to='/auth/login'
+                          to='/login'
                         />
                       </div>
                     </Col>
@@ -105,9 +109,7 @@ function Profile() {
               </>
             }
           />
-        </Row>
-      </Container>
-      <FooterDashboard />
+      </DashboardLayout>
     </>
   );
 }

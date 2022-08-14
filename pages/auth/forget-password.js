@@ -10,6 +10,8 @@ import { Formik } from "formik";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import AuthLayout from "../../components/AuthLayout";
+import { useDispatch } from "react-redux";
+import { forgetPassword } from "../../redux/actionAsync/auth";
 
 const forgetPassSheme = Yup.object().shape({
   email: Yup.string().email("invalid email address format").required(),
@@ -43,9 +45,9 @@ export const AuthForgetPass = ({ errors, handleSubmit, handleChange }) => {
   );
 };
 function ForgetPassword() {
-  const navigate = useRouter();
-  const redirectPage = () => {
-    navigate.push("/new-password");
+  const dispatch = useDispatch();
+  const onForgetPassword = (val) => {
+    dispatch(forgetPassword(val));
   };
   return (
     <>
@@ -66,7 +68,7 @@ function ForgetPassword() {
               }
             />
             <Formik
-              onSubmit={redirectPage}
+              onSubmit={onForgetPassword}
               initialValues={{ email: "" }}
               validationSchema={forgetPassSheme}
             >

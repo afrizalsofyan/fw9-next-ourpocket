@@ -157,7 +157,7 @@ export default function Home() {
                 <a className='btn-try-blue link-rm-line'>Try It Free</a>
               </Link>
             </div>
-            <div className='bg-Image-1 mx-auto'>
+            <div className='bg-Image-1 mx-auto mx-md-0'>
               <Image
                 className='width-Image-banner-1'
                 src={ImagePhone1}

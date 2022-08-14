@@ -9,9 +9,17 @@ import TransactionInfoDashboard from "../../components/TransactionInfoDashboard"
 import DashboardLayout from "../../components/DashboardLayout";
 import { useSelector } from "react-redux";
 import { ThreeCircles } from "react-loader-spinner";
+// import Cookie from "js-cookie";
+// import {useRouter} from 'next/router';
 
 function Dashboard() {
-    
+  // const navigate = useRouter();
+  // React.useEffect( ()=>{
+  //   const token = async () => await Cookie.get('token');
+  //   if(!token){
+  //     navigate.push('/login');
+  //   } 
+  // }, [navigate])
   return (
     <>
         {/* {loader !== null ? <ThreeCircles height="100"

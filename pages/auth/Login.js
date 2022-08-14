@@ -12,6 +12,8 @@ import InputField from "../../components/InputField";
 import TitleAuthForm from "../../components/TitleAuthForm";
 import { useRouter } from "next/router";
 import { login } from "../../redux/actionAsync/auth";
+import Cookie from "js-cookie";
+import { getProfile } from "../../redux/actionAsync/profile";
 
 const loginSheme = Yup.object().shape({
   email: Yup.string().email("invalid email address format").required(),
@@ -19,8 +21,7 @@ const loginSheme = Yup.object().shape({
 });
 
 const AuthForm = ({ errors, handleSubmit, handleChange }) => {
-  // const successMsg = useSelector((state)=> state.auth.successMsg);
-  // const errorMsg = useSelector((state)=> state.auth.errorMsg);
+  
   const [showPass, setShowPass] = React.useState(false);
   return (
     <Form
@@ -29,8 +30,7 @@ const AuthForm = ({ errors, handleSubmit, handleChange }) => {
       onSubmit={handleSubmit}
       onChange={handleChange}
     >
-      {/* {successMsg && <Alert variant='success'>{successMsg}</Alert>}
-        {errorMsg && <Alert variant='danger'>{errorMsg}</Alert>} */}
+      
       <InputField
         icon={<FiMail size={24} className="bg-grey-light" />}
         name="email"
@@ -96,28 +96,37 @@ const AuthForm = ({ errors, handleSubmit, handleChange }) => {
 function Login() {
   const navigate = useRouter();
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.token);
-
-  // const [visible, setVisible] = React.useState(false);
-
-  // const handleVisible = () => {
-  //   setVisible(true);
-  //   setTimeout(() => {
-  //     setVisible(false);
-  //   }, 4000);
-  // };
+  const notActive = useSelector((state) => state.auth.results?.errorMsg);
+  const errorMsg = useSelector((state) => state.auth.errorMsg);
+  const successMsg = useSelector((state)=>state.auth.successMsg);
+  const user = useSelector((state)=> state.auth.results);
+  const [visible, setVisible] = React.useState(false);
+  const token = useSelector((state) => state.auth?.token);
+  const handleVisible = () => {
+    setVisible(true);
+    setTimeout(() => {
+      setVisible(false);
+    }, 4000);
+  };
+  React.useEffect(() => {
+    if(token) {
+      if(user.pin === null) {
+        navigate.push('/create-pin');
+      } else {
+        navigate.push('/dashboard');
+      }
+    }
+    
+    handleVisible();
+  }, [token, user.pin]);
 
   const testLogin = (value) => {
     const data = { email: value.email, password: value.password };
     dispatch(login(data));
+    dispatch(getProfile(user.id ));
+    handleVisible();
+    console.log(user);
   };
-
-  React.useEffect(() => {
-    if (token) {
-      navigate.push("/dashboard");
-    }
-    // handleVisible();
-  }, [navigate, token]);
 
   return (
     <>
@@ -131,9 +140,7 @@ function Login() {
           className="px-5 py-5 d-flex flex-column justify-content-center bg-white gap-5"
         >
           <div className="d-flex flex-column gap-5">
-            {/* {location.state?.errorMsg && (
-                <Alert show={visible} variant='danger'>{location.state.errorMsg}</Alert>
-              )} */}
+           {notActive && <Alert variant="danger" show={visible}>{notActive}</Alert>}
             <TitleAuthForm
               title={
                 "Start Accessing Banking Needs With All Devices and All Platforms With 30.000+ Users"
@@ -142,6 +149,8 @@ function Login() {
                 "Transfering money is eassier than ever, you can access Zwallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!"
               }
             />
+             {errorMsg && <Alert variant="danger" show={visible}>{errorMsg}</Alert>}
+             {successMsg && <Alert variant="success" show={visible}>{successMsg}</Alert>}
             <Formik
               onSubmit={testLogin}
               initialValues={{ email: "", password: "" }}

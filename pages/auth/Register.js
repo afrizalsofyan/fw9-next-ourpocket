@@ -9,10 +9,10 @@ import Link from "next/link";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../redux/actionAsync/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import AuthLayout from "../../components/AuthLayout";
+import { register } from "../../redux/actionAsync/auth";
 
 const registerScheme = Yup.object().shape({
   username: Yup.string().min(6).required(),
@@ -88,28 +88,31 @@ const AuthRegister = ({ errors, handleSubmit, handleChange }) => {
   );
 };
 
-function Register() {
+ function Register() {
   const navigation = useRouter();
   const dispatch = useDispatch();
-  const successMsg = useSelector((state) => state.auth.successMsg);
-  const errorMsg = useSelector((state) => state.auth.errorMsg);
-  const token = useSelector((state) => state.auth.token);
   const submitRegister = (val) => {
-    // const dataNewUse ={email: val.email, password: val.password};
-    // dispatch(register(val));
-    // dispatch(login(dataNewUse));
-    navigation.push("/create-pin");
-  };
-  // React.useEffect(()=>{
-  //   if(successMsg){
-  //     redirect('/auth/create-pin');
-  //   }
-  // }, [redirect, successMsg]);
-  React.useEffect(() => {
-    if (token) {
-      // redirect('/auth/create-pin');
+    const fullname = val.username.split(' ');
+    let firstName = '';
+    let arrName = [];
+    let lastName = '';
+    if(fullname.length > 1){
+      firstName = fullname[0];
+      for(let i in fullname) {
+        if(i!=0){
+          arrName.push(fullname[i]);
+        }
+      }
+      lastName = arrName.join(' ');
+    } else {
+      firstName = fullname[0];
     }
-  }, [token]);
+
+    const dataNewUser ={firstName: firstName, lastName: lastName, email: val.email, password: val.password};
+    
+    dispatch(register(dataNewUser));  
+    navigation.push('/login');
+  };
   return (
     <>
       <Head>
@@ -130,7 +133,7 @@ function Register() {
                 "Transfering money is eassier than ever, you can access Zwallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!"
               }
             />
-            {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
+            
             <Formik
               onSubmit={submitRegister}
               initialValues={{ username: "", email: "", password: "" }}

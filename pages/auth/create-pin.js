@@ -7,7 +7,7 @@ import { InputPin } from "../../components/InputField";
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile } from "../../redux/actionAsync/profile";
-import { createPin } from "../../redux/actionAsync/auth";
+import { createPin, updatePin } from "../../redux/actionAsync/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import AuthLayout from "../../components/AuthLayout";
@@ -36,46 +36,49 @@ const CreatePinForm = ({ errors, handleSubmit, handleChange }) => {
 function CreatePin() {
   const dispatch = useDispatch();
   const navigate = useRouter();
-  // const successMsg = useSelector((state)=>state.auth.successMsg);
+  const errorMsg = useSelector((state)=>state.auth.errorMsg);
   const token = useSelector((state) => state.auth.token);
-  const profile = useSelector((state) => state.user.results);
-  console.log(profile);
-  const submitPin = (value) => {
-    // if(profile.pin_number === null){
-    //   if(value.pin1 === '' || value.pin2 === '' || value.pin3 === '' || value.pin4 === '' || value.pin5 === '' || value.pin6 === ''){
-    //     window.alert('Value is required');
-    //   } else {
-    //     if (isNaN(parseInt(value.pin1)) === false && isNaN(parseInt(value.pin2)) === false && isNaN(parseInt(value.pin3)) === false && isNaN(parseInt(value.pin4)) === false && isNaN(parseInt(value.pin5)) === false && isNaN(parseInt(value.pin6)) === false){
-    //       const joinPin = value.pin1 + value.pin2 + value.pin3 + value.pin4 + value.pin5 + value.pin6;
-    //       console.log(typeof joinPin);
-    //       // const data = {email: profile.email, pin: joinPin};
-    //       // dispatch(createPin(data));
-    //     } else {
-    //       window.alert('Please input with only number !!!');
-    //     }
-    //   }
-    // }
-    if (
-      isNaN(parseInt(value.pin1)) === false &&
-      isNaN(parseInt(value.pin2)) === false &&
-      isNaN(parseInt(value.pin3)) === false &&
-      isNaN(parseInt(value.pin4)) === false &&
-      isNaN(parseInt(value.pin5)) === false &&
-      isNaN(parseInt(value.pin6)) === false
-    ) {
-      const joinPin =
-        value.pin1 +
-        value.pin2 +
-        value.pin3 +
-        value.pin4 +
-        value.pin5 +
-        value.pin6;
-      console.log(joinPin);
-      navigate.push("/create-pin-success");
-      // const data = {email: profile.email, pin: joinPin};
-      // dispatch(createPin(data));
+  const user = useSelector((state) => state.auth.results);
+  
+  React.useEffect(()=> {
+    if(token) {
+      if(user.pin != null){
+        navigate.push('/dashboard/change-pin');
+      } 
     } else {
-      window.alert("Please input with only number !!!");
+      navigate.push('/login');
+    }
+  })
+
+  const submitPin = (value) => {
+    if(value.pin1 === '' || value.pin2 === '' || value.pin3 === '' || value.pin4 === '' || value.pin5 === '' || value.pin6 === ''){
+      window.alert('Value is required');
+    } else {
+      if (
+        isNaN(parseInt(value.pin1)) === false &&
+        isNaN(parseInt(value.pin2)) === false &&
+        isNaN(parseInt(value.pin3)) === false &&
+        isNaN(parseInt(value.pin4)) === false &&
+        isNaN(parseInt(value.pin5)) === false &&
+        isNaN(parseInt(value.pin6)) === false
+      ) {
+        const joinPin =
+          value.pin1 +
+          value.pin2 +
+          value.pin3 +
+          value.pin4 +
+          value.pin5 +
+          value.pin6;
+        console.log(typeof joinPin);
+        // navigate.push("/create-pin-success");
+        const data = {id: user.id, pin: joinPin};
+        dispatch(updatePin(data));
+        if(!errorMsg){
+          navigate.push("/create-pin-success");
+        }
+      } else {
+        window.alert("Please input with only number !!!");
+      }
     }
   };
   return (

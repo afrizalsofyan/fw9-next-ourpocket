@@ -6,6 +6,7 @@ import { InputPin } from '../../components/InputField';
 // import * as Yup from 'yup';
 import { ButtonSubmit } from '../../components/ButtonAuth';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 
 const ChangePinForm = ({ errors, handleChange, handleSubmit }) => {
@@ -50,22 +51,25 @@ const ChangePinForm = ({ errors, handleChange, handleSubmit }) => {
 };
 
 function ChangePin() {
-  // const profile = useSelector((state)=> state.profile.result);
+  const user = useSelector((state)=> state.user.result);
+  const router = useRouter();
   const onSubmitPin = (val) => {
-    // if(val.pin[0] === '' || val.pin[1] === '' || val.pin[2] === '' || val.pin[3] === '' || val.pin[4] === '' || val.pin[5] === ''){
-    //   window.alert('Value is required');
-    // } else {
-    //   if (isNaN(parseInt(val.pin[0])) === false && isNaN(parseInt(val.pin[1])) === false && isNaN(parseInt(val.pin[2])) === false && isNaN(parseInt(val.pin[3])) === false && isNaN(parseInt(val.pin[4])) === false && isNaN(parseInt(val.pin[5])) === false){
-    //     const finalPin = val.pin.join('');  
-    //     if(parseInt(finalPin) === profile.pin_number){
-    //       // redirect('new-pin');         
-    //     }else{
-    //       window.alert('Pin not match with your pin now !!!');
-    //     }
-    //   } else {
-    //     window.alert('Please input with only number !!!');
-    //   }
-    // }
+    if(val.pin[0] === '' || val.pin[1] === '' || val.pin[2] === '' || val.pin[3] === '' || val.pin[4] === '' || val.pin[5] === ''){
+      window.alert('Value is required');
+    } else {
+      if (isNaN(parseInt(val.pin[0])) === false && isNaN(parseInt(val.pin[1])) === false && isNaN(parseInt(val.pin[2])) === false && isNaN(parseInt(val.pin[3])) === false && isNaN(parseInt(val.pin[4])) === false && isNaN(parseInt(val.pin[5])) === false){
+        // const finalPin = val.pin.join('');  
+        // if(parseInt(finalPin) === user?.pin){
+        //   // redirect('new-pin');         
+        //   console.log('sesuai')
+        // }else{
+        //   window.alert('Pin not match with your pin now !!!');
+        // }
+        router.push('/dashboard/profile/change-new-pin')
+      } else {
+        window.alert('Please input with only number !!!');
+      }
+    }
   };
   return (
     <>

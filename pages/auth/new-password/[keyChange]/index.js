@@ -1,15 +1,17 @@
 import React from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form, Alert } from "react-bootstrap";
 import { FiLock, FiEyeOff, FiEye } from "react-icons/fi";
-import InputField from "../../components/InputField";
-import AuthBanner from "../../components/AuthBanner";
-import TitleAuthForm from "../../components/TitleAuthForm";
-import { ButtonSubmit } from "../../components/ButtonAuth";
+import InputField from "../../../../components/InputField";
+import TitleAuthForm from "../../../../components/TitleAuthForm";
+import { ButtonSubmit } from "../../../../components/ButtonAuth";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import AuthLayout from "../../components/AuthLayout";
+import AuthLayout from "../../../../components/AuthLayout";
+import { useDispatch, useSelector } from "react-redux";
+import { resetPassword } from "../../../../redux/actionAsync/auth";
+import Link from "next/link";
 
 const newPassSheme = Yup.object().shape({
   password: Yup.string().min(4).required(),
@@ -24,6 +26,22 @@ export const NewPass = ({
 }) => {
   const [showPass, setShowPass] = React.useState(false);
   const [showConfirmPass, setShowConfirmPass] = React.useState(false);
+  const errorMsg = useSelector((state)=> state.auth.errorMsg);
+  const [visible, setVisible] = React.useState(false);
+  const handleVisible = () => {
+    setVisible(true);
+    setTimeout(() => {
+      setVisible(false);
+    }, 2000);
+  };
+  React.useEffect(() => {
+    if(errorMsg){
+      setVisible(true);
+      setTimeout(() => {
+        setVisible(false);
+      }, 2000);
+    }
+  }, [errorMsg]);
   return (
     <Form
       className="d-flex flex-column gap-5"
@@ -31,6 +49,7 @@ export const NewPass = ({
       onSubmit={handleSubmit}
       onChange={handleChange}
     >
+      {errorMsg && <Alert variant="danger" show={visible}>{errorMsg}</Alert>}
       <InputField
         icon={<FiLock size={24} className="bg-grey-light" />}
         name="password"
@@ -85,6 +104,12 @@ export const NewPass = ({
           </Form.Control.Feedback>
         }
       />
+      {errorMsg != null ? <div className="text-end">
+        <Link href='/forget-password'>
+          <a className="link-secondary link-rm-line">Back to forget ?</a>
+        </Link>
+      </div> : null }
+
       <ButtonSubmit
         textButton={"Reset Password"}
         disable={Object.keys(errors).length === 0 ? false : true}
@@ -94,10 +119,17 @@ export const NewPass = ({
 };
 
 function NewPassword() {
-  const navigate = useRouter();
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const errorMsg = useSelector((state)=>state.auth.errorMsg);
   const submitNewPass = (values) => {
+    const {keyChange} = router.query;
     if (values.password === values.confirmPassword) {
-      navigate.push("/auth/login");
+      const data = {keyChangePass: keyChange, newPass: values.password, confirmPass: values.confirmPassword};
+      dispatch(resetPassword(data));
+      if(!errorMsg){
+        router.push('/login')
+      }
     } else {
       window.alert("Confirm password incorrect");
     }

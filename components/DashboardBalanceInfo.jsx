@@ -40,7 +40,7 @@ function DashboardBalanceInfo() {
           </div>
           <div className='wd-bx-3 bg-color-1 border border-light rounded-3 text-center py-2'>
             <Link
-              href='/dashboard/topup'
+              href='/dashboard/top-up'
             >
               <a className='link-rm-line d-flex flex-column flex-sm-row justify-content-between px-3 align-items-center'>
                 <FiPlus size={24} className='color-text-4' />

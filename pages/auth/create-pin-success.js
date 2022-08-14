@@ -14,8 +14,8 @@ function CreatePinSuccess() {
   const dispatch = useDispatch();
   const navigate = useRouter();
   const onLogout = () => {
-    dispatch(logout());
-    navigate.push("/login");
+    dispatch(logout(()=>navigate.push("/login")));
+    
   };
   const onDashboard = () => {
     navigate.push("/dashboard");

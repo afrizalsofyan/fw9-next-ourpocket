@@ -4,6 +4,7 @@ const nextConfig = {
   swcMinify: true,
   async rewrites () {
     return[
+      //auth
       {
         source: '/login',
         destination: '/auth/login'
@@ -13,8 +14,9 @@ const nextConfig = {
         destination: '/auth/register'
       },
       {
-        source: '/new-password',
-        destination: '/auth/new-password'
+        source: '/reset-password/:key*',
+        destination: '/auth/new-password/:key*',
+        // has:[{type: "query", value: "[keyChange]"}]
       },
       {
         source: '/forget-password',
@@ -27,7 +29,37 @@ const nextConfig = {
       {
         source: '/create-pin-success',
         destination: '/auth/create-pin-success'
-      }
+      },
+      //DASHBOARD
+      //profile
+      {
+        source: '/dashboard/profile/change-new-pin',
+        destination: '/dashboard/change-new-pin'
+      },
+      {
+        source: '/dashboard/profile/change-password',
+        destination: '/dashboard/change-password'
+      },
+      {
+        source: '/dashboard/profile/change-pin',
+        destination: '/dashboard/change-pin'
+      },
+      {
+        source: '/dashboard/profile/details',
+        destination: '/dashboard/detail-profile'
+      },
+      {
+        source: '/dashboard/profile/edit-phone',
+        destination: '/dashboard/edit-phone'
+      },
+      {
+        source: '/dashboard/profile/edit-profile',
+        destination: '/dashboard/edit-profile'
+      },
+      {
+        source: '/dashboard/profile/manage-phone',
+        destination: '/dashboard/manage-phone'
+      },
     ]
   },
   // async redirect () {

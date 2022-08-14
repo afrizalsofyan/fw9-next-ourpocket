@@ -2,12 +2,13 @@ import React from 'react';
 import { ProfileLayout } from '../../components/ContentLayout';
 import { FiEye, FiEyeOff, FiLock } from 'react-icons/fi';
 import InputField from '../../components/InputField';
-import { Form } from 'react-bootstrap';
+import { Alert, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { ButtonSubmit } from '../../components/ButtonAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePassword } from '../../redux/actionAsync/profile';
+import { useRouter } from 'next/router';
 
 const changePasswordSchema = Yup.object().shape({
   currentPassword: Yup.string().min(4).required(),
@@ -120,13 +121,18 @@ export const ChangePasswordForm = ({ errors, handleSubmit, handleChange }) => {
 
 function ChangePassword() {
   const dispatch = useDispatch();
-  const token = useSelector((state)=>state.auth.token);
+  const router = useRouter();
+  const user = useSelector((state)=>state.auth.results);
+  const errorMsg = useSelector((state)=> state.user.errorMsg);
   const onSubmitPassword = (val) => {
     if (val.newPassword !== val.repeatPassword) {
       window.alert('Repeat password is incorrect');
     } else {
-      const data = {token: token, currentPassword: val.currentPassword, newPassword: val.newPassword, repeatPassword: val.repeatPassword};
-      // dispatch(changePassword(data));
+      const data = {id: user.id, currentPassword: val.currentPassword, newPassword: val.newPassword, repeatPassword: val.repeatPassword};
+      dispatch(changePassword(data));
+      if(!errorMsg){
+        router.push('/dashboard/profile')
+      }
       // redirect('/home/profile/details');
     }
   };
@@ -137,6 +143,7 @@ function ChangePassword() {
         subtitleText='You must enter your current password and then type your new password twice.'
         child={
           <>
+          {errorMsg && <Alert variant='danger'>{errorMsg}</Alert>}
             <Formik
               onSubmit={onSubmitPassword}
               initialValues={{ currentPassword: '', newPassword: '', repeatPassword: '' }}

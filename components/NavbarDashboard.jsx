@@ -15,22 +15,21 @@ import Head from 'next/head';
 import { getProfile } from '../redux/actionAsync/profile';
 import Cookie from 'js-cookie';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 function NavbarDashboard({ titlePage }) {
   const dispatch = useDispatch();
-  // const token = useSelector((state) => state.auth.token);
-  const user = useSelector((state)=> state.auth?.results);
-  const profile = useSelector((state)=> state.user?.results)
-  // const location = useLocation();
-  // const [visible, setVisible] = React.useState(false);
-
+  const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state)=> state.auth.results);
+  const profile = useSelector((state)=> state.user.results);
+  const router = useRouter();
   React.useEffect(() => {
-    dispatch(getProfile(user.id !== undefined ? user.id : Cookie.get('id')));
-    // setVisible(true);
-    // setTimeout(() => {
-    //   setVisible(false);
-    // }, 1500);
-  }, [dispatch, user]);
+    if(token){
+      dispatch(getProfile(user.id ));
+    } else {
+      router.push('/login')
+    }
+  }, [dispatch, user, token, router]);
   
   const fullNameUser = `${profile?.firstName} ${profile?.lastName}`;
   return (

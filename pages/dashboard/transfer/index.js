@@ -1,10 +1,10 @@
 import React from 'react';
-import NavbarDashboard from '../../../../components/NavbarDashboard';
+import NavbarDashboard from '../../../components/NavbarDashboard';
 import { Container, Form, InputGroup, Row } from 'react-bootstrap';
-import SideBarMenu from '../../../../components/SideBarMenu';
-import FooterDashboard from '../../../../components/FooterDashboard';
-import ContentLayout from '../../../../components/ContentLayout';
-import { UserCard } from '../../../../components/UserCard';
+import SideBarMenu from '../../../components/SideBarMenu';
+import FooterDashboard from '../../../components/FooterDashboard';
+import ContentLayout from '../../../components/ContentLayout';
+import { UserCard } from '../../../components/UserCard';
 
 // import Img1 from '../../assets/images/img/img1.png';
 // import Img2 from '../../assets/images/img/img2.png';
