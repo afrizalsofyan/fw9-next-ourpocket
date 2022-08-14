@@ -13,200 +13,109 @@ import { convertMoney } from '../../components/DetailTransferList';
 import { FiSearch } from 'react-icons/fi';
 import { Formik } from 'formik';
 import { ButtonSubmit } from '../../components/ButtonAuth';
+import Image from 'next/image';
+import { FcManager } from 'react-icons/fc';
+import DashboardLayout from '../../components/DashboardLayout';
 
 function History() {
   const dispatch = useDispatch();
-  const token = useSelector((state)=>state.auth.token);
-  const transaction = useSelector((state)=>state.transaction.result);
-  const historyData = transaction?.result;
-  const infoData = transaction?.info;
-  const [keyword, setKeyword] = React.useState('');
-  const [searchBy, setSearchBy] = React.useState(0);
-  const [sortBy, setSortBy] = React.useState(0);
-  const [sortType, setSortType] = React.useState(0);
-  const param = {token: token, page: 1};
-  // let param = {token: token, page: page};
-  const onNextPage = ()=>{
-    let searchByKeyword = '';
-    let sortByKeyword = '';
-    let sortTypeKeyword;
-    if(searchBy === 1 ){
-      searchByKeyword = 'amount';
-    } else if(searchBy === 2 ){
-      searchByKeyword = 'recipient';
-    } else {
-      searchByKeyword = 'sender';
-    }
-    if(sortBy === 1 ){
-      sortByKeyword = 'amount';
-    } else {
-      sortByKeyword = 'time';
-    }
-    if(sortType === 1) {
-      sortTypeKeyword = 0;
-    } else {
-      sortTypeKeyword=1;
-    }
-    const param = {token: token, page: transaction.info.nextPage, search: keyword, searchBy: searchByKeyword, sortBy: sortByKeyword, sortType: sortTypeKeyword};
-    dispatch(historyTransaction(param));
-  };
-  const onPrevPage = ()=>{
-    let searchByKeyword = '';
-    let sortByKeyword = '';
-    let sortTypeKeyword;
-    if(searchBy === 1 ){
-      searchByKeyword = 'amount';
-    } else if(searchBy === 2 ){
-      searchByKeyword = 'recipient';
-    } else {
-      searchByKeyword = 'sender';
-    }
-    if(sortBy === 1 ){
-      sortByKeyword = 'amount';
-    } else {
-      sortByKeyword = 'time';
-    }
-    if(sortType === 1) {
-      sortTypeKeyword = 0;
-    } else {
-      sortTypeKeyword=1;
-    }
-    const param = {token: token, page: transaction.info.prevPage, search: keyword, searchBy: searchByKeyword, sortBy: sortByKeyword, sortType: sortTypeKeyword};
-    dispatch(historyTransaction(param));
-  };
-  
-  const onSearchHistory = () =>{
-    let searchByKeyword = '';
-    let sortByKeyword = '';
-    let sortTypeKeyword;
-    if(searchBy === 1 ){
-      searchByKeyword = 'amount';
-    } else if(searchBy === 2 ){
-      searchByKeyword = 'recipient';
-    } else {
-      searchByKeyword = 'sender';
-    }
-    if(sortBy === 1 ){
-      sortByKeyword = 'amount';
-    } else {
-      sortByKeyword = 'time';
-    }
-    if(sortType === 1) {
-      sortTypeKeyword = 0;
-    } else {
-      sortTypeKeyword=1;
-    }
-    const param = {token: token, page: transaction.info.currentPage, search: keyword, searchBy: searchByKeyword, sortBy: sortByKeyword, sortType: sortTypeKeyword};
-    // , sortBy: sortByKeyword, sortType: sortType
-    dispatch(historyTransaction(param));
-    console.log(searchByKeyword);
-    console.log(sortByKeyword);
-    console.log(typeof searchBy);
-  };
+  const transaction = useSelector((state)=>state.transaction.results);
+  const historyData = transaction?.data;
+  const infoData = transaction?.pagination;
+  const [limitFilter, setLimitFilter] = React.useState();
+  const [filterType, setFilterType] = React.useState();
+  const [page, setPage] = React.useState(1);
+  const data = {page: page, limit: limitFilter == 1 ? 3 : limitFilter == 2 ? 5 : limitFilter == 3 ? 7 : limitFilter == 4 ? 10 : 3, filter: filterType == 1 ? 'WEEK': filterType == 2 ? 'MONTH' : filterType == 3 ? 'YEAR' : 'MONTH'};
+  console.log(limitFilter)
+  const handleLimit = (e) => {
+    setLimitFilter(e.target.value);
+  }
+
+  const handleFilter = (e)=>{
+    setFilterType(e.target.value)
+  }
   const onResetParam = () => {
-    const param = {token: token, page: 1, search: undefined, searchBy: undefined, sortBy: undefined, sortType: undefined};
-    dispatch(historyTransaction(param));
+    setLimitFilter(0);
+    setFilterType(0);
   };
+
+  const onNextPage = () => {
+    setPage(page+1)
+  }
+
+  const onPrevPage = () => {
+    setPage(page-1)
+  }
+
   React.useEffect(()=>{
-    dispatch(historyTransaction(param));
-  }, []);
+    dispatch(historyTransaction(data));
+  }, [dispatch, page, limitFilter, filterType]);
   return (
     <>
-      <NavbarDashboard titlePage='OPo - History'/>
-      {/* SIDEBAR */}
-      <Container as='section' className='g-0'>
-        <Row className='pt-5 gx-0 gx-md-3'>
-          <SideBarMenu />
-          <ContentLayout
-            child={
-              <>
-                <div className='d-flex flex-column gap-4'>
-                  <h1 className='fw-bold fs-4 color-text-2'>Transaction History</h1>
-                  <div className='d-flex flex-column gap-3 overflow-auto px-md-4 color-text-6'>
-                    {/* <span className='bg-grey-light fw-bold color-text-6'>This Week</span> */}
-                    <div className='d-flex flex-column gap-3'>
-                      <div className='d-flex'>
-                        <Form.Control
-                          name='search'
-                          className='cstm-border2 text-center rounded-0 color-text-6'
-                          type='text'
-                          value={keyword}
-                          onChange={(e)=>setKeyword(e.target.value)}
-                          disabled={searchBy===0}
-                          placeholder='Search history'
-                        />
-                        <div>
-                          <Button className='bg-color-1 border-0 d-flex flex-column align-items-center py-3 px-3' onClick={onSearchHistory}><FiSearch/></Button>
-                        </div>
-                      </div>
-                      <div className='d-flex flex-column flex-md-row gap-4 gap-md-0 justify-content-between'>
-                        <div className='d-flex flex-column flex-md-row gap-3'>
-                          <DropdownButton
-                            as={ButtonGroup}
-                            size='sm'
-                            variant={'info py-2 bg-color-1 color-text-4'}
-                            title={'Search By'}
-                            onSelect={(eventKey)=>{
-                              setSearchBy(parseInt(eventKey));
-                            // console.log(typeof eventKey);
-                            }}
-                          >
-                            <Dropdown.Item eventKey='1' active={searchBy===1? true : false}>amount</Dropdown.Item>
-                            <Dropdown.Item eventKey='2' active={searchBy===2? true : false}>recipient</Dropdown.Item>
-                            <Dropdown.Item eventKey='3' active={searchBy===3? true : false}>sender</Dropdown.Item>
-                          </DropdownButton>
-                          <DropdownButton
-                            as={ButtonGroup}
-                            size='sm'
-                            variant={'info py-2 bg-color-1 color-text-4'}
-                            title={'Sort By'}
-                            onSelect={(eventKey)=>{
-                              setSortBy(parseInt(eventKey));
-                            // console.log(typeof eventKey);
-                            }}
-                          >
-                            <Dropdown.Item eventKey='1' active={sortBy===1? true : false}>amount</Dropdown.Item>
-                            <Dropdown.Item eventKey='2' active={sortBy===2? true : false}>time</Dropdown.Item>
-                          </DropdownButton>
-                          <DropdownButton
-                            as={ButtonGroup}
-                            size='sm'
-                            variant={'info py-2 bg-color-1 color-text-4'}
-                            title={'Sort Type'}
-                            onSelect={(eventKey)=>{
-                              setSortType(parseInt(eventKey));
-                            // console.log(typeof eventKey);
-                            }}
-                          >
-                            <Dropdown.Item eventKey='1' active={sortType===1? true : false}>asc</Dropdown.Item>
-                            <Dropdown.Item eventKey='2' active={sortType===2? true : false}>desc</Dropdown.Item>
-                          </DropdownButton>
-                        </div>
-                        <Button className='btn bg-color-1 color-text-4 border-0' onClick={onResetParam}>Reset</Button>
-                      </div>
+      <DashboardLayout>
+        <ContentLayout
+        child={
+          <>
+            <div className='d-flex flex-column gap-4'>
+              <h1 className='fw-bold fs-4 color-text-2'>Transaction History</h1>
+              <div className='d-flex flex-column gap-3 overflow-auto px-md-4 color-text-6'>
+                
+                <div className='d-flex flex-column gap-3'>
+                  
+                  <div className='d-flex flex-column flex-md-row gap-4 gap-md-0 justify-content-between'>
+                    <div className='d-flex flex-column flex-md-row w-50 gap-3'>
+                    <Form.Select name='limit' className='shadow-none' value={limitFilter} onChange={handleLimit}>
+                      <option value={0}>Select Limit</option>
+                      <option value={1}>3</option>
+                      <option value={2}>5</option>
+                      <option value={3}>7</option>
+                      <option value={4}>10</option>
+                    </Form.Select>
+                    <Form.Select name='filter' className='shadow-none' value={filterType} onChange={handleFilter}>
+                      <option value={0}>Select Filter</option>
+                      <option value={1}>week</option>
+                      <option value={2}>mount</option>
+                      <option value={3}>year</option>
+                    </Form.Select>
                     </div>
-                    {historyData?.map((data)=>{
-                      return(
-                        <>
-                          <div key={data?.id}>
-                            {data.type === 'payment' ? <UserCardHistoryDecreaseAmount img_path={DummyImage2} alt='imgDummy2' nameSender={data.sender}  nameRecipient={data.recipient} type_transaction={data.type} amount={`- ${convertMoney(data.amount)}`}/> : <UserCardHistoryIncreaseAmount img_path={DummyImage1} alt='imgDummy1' name={data.recipient} type_transaction={data.type} amount={`+ ${convertMoney(data.amount)}`}/>}  
-                          </div>
-                        </>
-                      );
-                    })}
-                  </div>
-                  <div className='d-flex justify-content-center align-items-center gap-4'>
-                    <Button disabled={infoData?.prevPage === null} onClick={onPrevPage} className='btn px-3 py-2'>Prev</Button>
-                    <span className='text-color-2 fs-4 text-decoration-underline'>{infoData?.currentPage}</span>
-                    <Button disabled={infoData?.nextPage === null} onClick={onNextPage} className='btn px-3 py-2'>Next</Button>
+                    <Button disabled={limitFilter === undefined ? true : limitFilter === 0 ? true : limitFilter == 1 ? true : false} className='btn bg-color-1 color-text-4 border-0 shadow-none' onClick={onResetParam}>Reset</Button>
                   </div>
                 </div>
-              </>
-            }
-          />
-        </Row>
-      </Container>
-      <FooterDashboard />
+                <span className='bg-grey-light fw-bold color-text-6 mt-3'>
+                  {
+                    filterType == null || filterType == 0 ? 'This All History' : `Filter by ${filterType == 1 ? 'Week': filterType == 2 ? 'Month' : filterType == 3 ? 'Year' : 'Month'}`
+                  }
+                </span>
+                {historyData?.map((data)=>{
+                  return(
+                    <>
+                      <div key={data?.id}>
+                      <UserCardHistoryIncreaseAmount img_path={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${data.image}`} alt={`${data.fullName}`} name={data.fullName} type_transaction={data.type} amount={`${data.type != 'topup' ? '-' : '+'} ${convertMoney(data.amount)}`} status_transaction={data.status} time_transaction={new Date(data.createdAt).toLocaleString()} imgProfile={
+                        data.image != null ? 
+                        <Image className='we-3' src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${data.image}`} alt={data.fullName} width={60} height={60} /> : <FcManager size={60}/>
+                      }/>  
+                        {/* {data.type === 'accept' ? <UserCardHistoryDecreaseAmount img_path={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${data.image}`} alt={`${data.fullName}`} nameSender={data.sender} nameRecipient={data.recipient} type_transaction={data.type} amount={`- ${convertMoney(data.amount)}`}/> :} */}
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
+              <div className='d-flex justify-content-center align-items-center gap-4'>
+                <Button 
+                disabled={infoData?.page === 1} 
+                onClick={onPrevPage}
+                className='btn px-3 py-2'>Prev</Button>
+                <span className='text-color-2 fs-4 text-decoration-underline'>{infoData?.page}</span>
+                <Button
+                disabled={infoData?.page === infoData?.totalPage} 
+                onClick={onNextPage} 
+                className='btn px-3 py-2'>Next</Button>
+              </div>
+            </div>
+          </>
+        }
+      />
+      </DashboardLayout>
     </>
   );
 }

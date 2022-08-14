@@ -9,10 +9,9 @@ import { getProfile } from '../redux/actionAsync/profile';
 // import Datadummy from '../helpers/dummydata.json';
 import Cookie from 'js-cookie'
 import { connect } from 'react-redux';
-import { historyTransaction } from '../redux/actionAsync/transaction';
 import Image from 'next/image';
 import { FcSurvey } from 'react-icons/fc';
-
+import { historyTransaction } from '../redux/actionAsync/transaction';
 class TransactionInfoDashboard extends React.Component {
   // state = {
   //   data: Datadummy.result
@@ -26,12 +25,14 @@ class TransactionInfoDashboard extends React.Component {
         <div className='d-flex flex-column bg-white p-4 gap-4 rounded-5 h-100 color-text-6'>
           <div className='d-flex flex-row justify-content-between'>
             <span className='fw-bold fs-6'>Transaction History</span>
-            <Link className='link-rm-line' href='/home/history'>
-              <span className='fw-light color-text-6'>See all</span>
+            <Link href='/dashboard/history'>
+              <a className='link-rm-line' >
+                <span className='fw-light color-text-6'>See all</span>
+              </a>
             </Link>
           </div>
           {/* item max 3 */}
-          <div className='d-flex flex-column gap-5'>
+          <div className='d-flex flex-column gap-3'>
             {this.props.history !== undefined && this.props.history?.data?.map((el)=>{
               return(
                 <CardHistoryDashboard 
@@ -51,7 +52,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  historyTransaction: () => dispatch(historyTransaction())
+  historyTransaction: () => {
+    const data = {page: 1, limit: 3, filter: 'MONTH'}
+    dispatch(historyTransaction(data))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransactionInfoDashboard);

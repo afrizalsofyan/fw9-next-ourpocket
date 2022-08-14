@@ -5,18 +5,19 @@ import NavbarDashboard from '../../components/NavbarDashboard';
 import SideBarMenu from '../../components/SideBarMenu';
 import FooterDashboard from '../../components/FooterDashboard';
 import { ButtonSubmit } from '../../components/ButtonAuth';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { topupBalance } from '../../redux/actionAsync/transaction';
 
-const ModalTopupBalance = ({show, onHide}) => {
+const topupSchema = Yup.object().shape({
+  amount: Yup.number().typeError('Field must number!!!').min(50000).required(),
+})
+
+export const FormTopup = ({errors, handleSubmit, handleChange}) => {
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      backdrop='static'
-      keyboard={false}
-      centered
-    >
-      {/* onSubmit={handleSubmit} onChange={handleChange */}
-      <Form noValidate>
+    <Form noValidate onSubmit={handleSubmit} onChange={handleChange}>
         <Modal.Header closeButton className='border-0 cstm-btn-modal'>
           <Modal.Title className='modal-title fw-bold'>
             <span className='color-text-2'>Topup</span>
@@ -29,17 +30,16 @@ const ModalTopupBalance = ({show, onHide}) => {
             </span>
           </div>
           <div className='pt-5 pb-4'>
-            <div className='d-grid pin-wrapper w-100'>
-              <Form.Group>
-                <Form.Control
+            <div className={`d-grid w-100 px-3 border border-1 rounded-2 ${errors.amount ? 'border-danger' : 'border-secondary'}`}>
+              <Form.Control
                   type='number'
-                  name='topup-amount'
-                  className='shadow-none rounded-0 color-text-6 rounded-3 fw-bold fs-5 text-center border-bottom-1'
+                  name='amount'
+                  className={`shadow-none rounded-0 color-text-6 fw-bold fs-5 text-center border-0 border-bottom mb-2 ${errors.amount ? 'border-danger' : 'border-secondary'}`}
+                  isInvalid={!!errors.amount}
                 />
-              </Form.Group>
             </div>
           </div>
-          {/* <span className='fs-6 py-5 text-danger'>{errors.pin}</span> */}
+          <span className='fs-6 py-5 text-danger'>{errors.amount}</span>
         </Modal.Body>
         <Modal.Footer className='border-0 modal-footer-position'>
 
@@ -48,6 +48,29 @@ const ModalTopupBalance = ({show, onHide}) => {
           </div>
         </Modal.Footer>
       </Form>
+  )
+}
+
+const ModalTopupBalance = ({show, onHide}) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const onTopupHandle = (val) => {
+    const data = {amount: val.amount}
+    dispatch(topupBalance(data)); 
+    router.push('/dashboard/top-up-redirect')   
+  }
+  return (
+    <Modal
+      show={show}
+      onHide={onHide}
+      backdrop='static'
+      keyboard={false}
+      centered
+    >
+      {/* onSubmit={handleSubmit} onChange={handleChange */}
+      <Formik onSubmit={onTopupHandle} initialValues={{amount: ''}} validationSchema={topupSchema}>
+        {(props)=><FormTopup {...props}/>}
+      </Formik>
     </Modal >
   )
 }

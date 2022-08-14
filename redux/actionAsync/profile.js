@@ -69,3 +69,29 @@ export const updatePhotoProfile = createAsyncThunk('user/updatePhoto', async (re
         return result;
     }
 });
+
+export const checkPin = createAsyncThunk('user/checkPin', async(request)=>{
+    const result = {};
+    try {
+        const {data} = await http().get('/user/pin?pin='+request.pin);
+        result.successMsg = data.msg;
+        result.status = data.status;
+        return result;
+    } catch (error) {
+        result.errorMsg = error.response.data.msg;
+        return result;
+    }
+});
+
+export const deleteImageProfile = createAsyncThunk('user/deletePhoto', async(id)=>{
+    const result = {};
+    try {
+        const {data} = await http().delete('/user/image/'+id);
+        result.successMsg = data.msg;
+        result.status = data.status;
+        return result;
+    } catch (error) {
+        result.errorMsg = error.response.data.msg;
+        return result;
+    }
+});

@@ -90,7 +90,7 @@ function SideBarMenu() {
   const onLogout = () => {
     dispatch(logout(()=>{
       router.push('/login');
-      window.location.reload();
+      // window.location.reload();
     }));  
   };
   return (

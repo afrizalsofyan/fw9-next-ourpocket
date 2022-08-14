@@ -74,3 +74,29 @@ export const updatePin = createAsyncThunk('user/updatePin', async (request) => {
         return result;
     }
 });
+
+export const userLogout = createAsyncThunk('user/logout', async()=>{
+    const result = {};
+    try {
+        const {data} = await http().post('/auth/logout');
+        result.successMsg = data.msg;
+        result.status = data.status;
+        return result;
+    } catch (error) {
+        result.errorMsg = error.response.data.msg;
+        return result;
+    }
+});
+
+export const verivyEmail = createAsyncThunk('user/verivy', async(request)=>{
+    const result = {};
+    try {
+        const {data} = await http().get('/auth/verivy/'+request.verivyKey);
+        result.successMsg = data.msg;
+        result.status = data.status;
+        return result;
+    } catch (error) {
+        result.errorMsg = error.response.data.msg;
+        return result;
+    }
+});

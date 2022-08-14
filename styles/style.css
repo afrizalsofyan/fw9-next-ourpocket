@@ -7,6 +7,9 @@ body{
     font-style: normal !important;
     background: #EFFFFD;
 }
+.height-fixed-layout{
+    height: 25em !important;
+}
 .content-layout{
     height: 800px;
 }

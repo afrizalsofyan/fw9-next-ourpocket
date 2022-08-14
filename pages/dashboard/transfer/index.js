@@ -1,67 +1,212 @@
-import React from 'react';
-import NavbarDashboard from '../../../components/NavbarDashboard';
-import { Container, Form, InputGroup, Row } from 'react-bootstrap';
-import SideBarMenu from '../../../components/SideBarMenu';
-import FooterDashboard from '../../../components/FooterDashboard';
-import ContentLayout from '../../../components/ContentLayout';
-import { UserCard } from '../../../components/UserCard';
-
-// import Img1 from '../../assets/images/img/img1.png';
-// import Img2 from '../../assets/images/img/img2.png';
-// import Img3 from '../../assets/images/img/img3.png';
-// import Img4 from '../../assets/images/img/img4.png';
-import { FiSearch } from 'react-icons/fi';
-import { useDispatch, useSelector } from 'react-redux';
-// import { getAllUser } from '../../redux/actionAsync/user';
+import React from "react";
+import {
+  Button,
+  Form,
+  InputGroup,
+  Table,
+} from "react-bootstrap";
+import ContentLayout from "../../../components/ContentLayout";
+import { UserCard } from "../../../components/UserCard";
+import { FiSearch } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import DashboardLayout from "../../../components/DashboardLayout";
+import { getAllUser } from "../../../redux/actionAsync/user";
+import Image from "next/image";
+import { FcDown, FcManager, FcUp } from "react-icons/fc";
 
 function Transfer() {
-  const users = useSelector((state)=> state.user.result);
-  const token = useSelector((state)=> state.auth.token);
+  const users = useSelector((state) => state.profile.results);
+  const infoData = useSelector((state) => state.profile.results.pagination);
+  const [limitFilter, setLimitFilter] = React.useState();
+  const [sortNameFilter, setSortNameFilter] = React.useState("firstName ASC");
+  const [sortPhoneFilter, setSortPhoneFilter] = React.useState("noTelp DESC");
+  const [sortValue, setSortValue] = React.useState();
+  const [pages, setPages] = React.useState(1);
+  const [keyword, setKeyword] = React.useState();
   const dispatch = useDispatch();
+  const data = {
+    page: pages ?? 1,
+    limit: limitFilter ?? 5,
+    keywords: keyword ?? '',
+    sort: sortValue ?? "firstName ASC",
+  };
 
-  // React.useEffect(()=>{
-  //   dispatch(getAllUser(token));
-  // }, [dispatch, token]);
-  // console.log(users);
+  const handleLimit = (e) => {
+    setLimitFilter(e.target.value);
+  };
+
+  const handleSortName = () => {
+    if (sortNameFilter === "firstName ASC") {
+      setSortNameFilter("firstName DESC");
+      setSortValue(sortNameFilter);
+    } else if (sortNameFilter === "firstName DESC") {
+      setSortNameFilter("firstName ASC");
+      setSortValue(sortNameFilter);
+    }
+  };
+
+  const handleSortPhone = () => {
+    if (sortPhoneFilter === "noTelp ASC") {
+      setSortPhoneFilter("noTelp DESC");
+      setSortValue(sortPhoneFilter);
+    } else if (sortPhoneFilter === "noTelp DESC") {
+      setSortPhoneFilter("noTelp ASC");
+      setSortValue(sortPhoneFilter);
+    }
+  };
+
+  React.useEffect(() => {
+    dispatch(getAllUser(data));
+  }, [dispatch, limitFilter, sortValue, pages, keyword]);
+
+  const onNextPage = () => {
+    setPages(pages+1)
+  }
+  const onPrevPage = () => {
+    setPages(pages-1)
+  }
+  const handleSearch = (e)=> {
+    setKeyword(e.target.value)
+  }
+
   return (
     <>
-      <NavbarDashboard titlePage='OPo - transfer'/>
-      <Container as='section' className='g-0 '>
-        <Row className='pt-5 gx-0 gx-md-3'>
-          <SideBarMenu />
-          <ContentLayout
-            child={
-              <>
-                <div className='d-flex flex-row justify-content-between'>
-                  <span className='fw-bold fs-5 color-text-2'>Search Receiver</span>
+      <DashboardLayout>
+        <ContentLayout
+          child={
+            <>
+              <div className="d-flex flex-row justify-content-between">
+                <span className="fw-bold fs-5 color-text-2">
+                  Search Receiver
+                </span>
+              </div>
+              <InputGroup className="search-input my-4 ">
+                <span className="icon-input">
+                  <FiSearch size={24} />
+                </span>
+                <Form.Control
+                  type="text"
+                  className="ps-5 border-0 bg-grey-input rounded-3 py-3 color-text-6"
+                  placeholder="Search by name or phone number"
+                  onChange={handleSearch}
+                />
+              </InputGroup>
+              {/* img_path={Img1} */}
+              <div className="d-flex flex-column gap-3 mb-4">
+                <div className="d-flex flex-column flex-md-row gap-4 gap-md-0 justify-content-between">
+                  <div className="d-flex flex-column flex-md-row w-25 gap-3">
+                    <Form.Select
+                      name="limit"
+                      className="shadow-none"
+                      value={limitFilter}
+                      onChange={handleLimit}
+                    >
+                      <option value={0}>Select Limit</option>
+                      <option value={5}>5</option>
+                      <option value={10}>10</option>
+                      <option value={25}>25</option>
+                      <option value={50}>50</option>
+                    </Form.Select>
+                    {/* <Form.Select
+                      name="filter"
+                      className="shadow-none"
+                      // value={filterType} onChange={handleFilter}
+                    >
+                      <option value={0}>Select Filter</option>
+                      <option value={1}>First Name | ASC</option>
+                      <option value={2}>First Name | DESC</option>
+                      <option value={3}>Phone Number | ASC</option>
+                      <option value={3}>Phone Number | DESC</option>
+                    </Form.Select> */}
+                  </div>
                 </div>
-                <InputGroup className='search-input my-4 '>
-                  <span className='icon-input'>
-                    <FiSearch size={24}/>
-                  </span>
-                  <Form.Control type='text' className='ps-5 border-0 bg-grey-input rounded-3 py-3 color-text-6' placeholder='Search receiver here'/>
-                </InputGroup>
-                {/* img_path={Img1} */}
-                <div className='d-flex flex-column gap-5 py-4'>
-                  {users && users.map((el)=>{
-                    return(
-                      <div key={el.id}>
-                        <UserCard
-                          url={`/home/transfer/${el.id}`}
-                          img_path={Img1}
-                          name={`${el.first_name} ${el.last_name}`}
-                          phone={'+62 811-3452-5252'}
-                        />
-                      </div>
-                    );
-                  })}
+              </div>
+              <div className="height-fixed-layout">
+                <div className="d-flex flex-column gap-5 py-4 h-100 overflow-auto">
+                  <Table responsive>
+                    <thead>
+                      <tr className="d-flex">
+                        <th className="w-50 d-flex">
+                          <Button
+                            onClick={handleSortName}
+                            className="btn bg-transparent color-text-6 border-0 shadow-none"
+                          >
+                            <span>Name</span>
+                            {sortNameFilter === 'firstName ASC' ? <FcUp size={20} /> : <FcDown size={20} />}
+                          </Button>
+                        </th>
+                        <th className="w-50 d-flex ">
+                          <Button
+                            onClick={handleSortPhone}
+                            className="btn bg-transparent color-text-6 border-0 shadow-none"
+                          >
+                            <span>Phone</span>
+                            {sortPhoneFilter === 'noTelp ASC' ? <FcUp size={20} /> : <FcDown size={20} />}
+                          </Button>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {users &&
+                        users?.data?.map((el) => {
+                          return (
+                            <>
+                              <tr key={el.id} className="d-flex ">
+                                <td className="w-50 d-flex ">
+                                  <UserCard
+                                    url={`/home/transfer/${el.id}`}
+                                    imgProfile={
+                                      el.image ? (
+                                        <Image
+                                          className="we-3"
+                                          src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${el?.image}`}
+                                          alt=""
+                                          width={50}
+                                          height={50}
+                                        />
+                                      ) : (
+                                        <FcManager size={60} />
+                                      )
+                                    }
+                                    name={`${el.firstName} ${el.lastName}`}
+                                  />
+                                </td>
+                                <td className="w-50 d-flex ">
+                                  {el.noTelp ? el.noTelp : "-"}
+                                </td>
+                              </tr>
+                              {/* {el.noTelp ? (
+                            
+                          ) : null} */}
+                            </>
+                          );
+                        })}
+                    </tbody>
+                  </Table>
                 </div>
-              </>
-            }
-          />
-        </Row>
-      </Container>
-      <FooterDashboard />
+              </div>
+
+              <div className="d-flex justify-content-center align-items-center gap-4 mt-5">
+                <Button
+                  disabled={infoData?.page === 1}
+                  onClick={onPrevPage}
+                  className="btn px-3 py-2"
+                >
+                  Prev
+                </Button>
+                <span className='text-color-2 fs-4 text-decoration-underline'>{infoData?.page}</span>
+                <Button
+                  disabled={infoData?.page === infoData?.totalPage}
+                  onClick={onNextPage}
+                  className="btn px-3 py-2"
+                >
+                  Next
+                </Button>
+              </div>
+            </>
+          }
+        />
+      </DashboardLayout>
     </>
   );
 }
