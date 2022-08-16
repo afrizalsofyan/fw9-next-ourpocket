@@ -1,12 +1,10 @@
 import React from 'react';
 import { Button, Container, Row } from 'react-bootstrap';
-// import { useParams } from 'react-router-dom';
 import ContentLayout from '../../../../../components/ContentLayout';
 import FooterDashboard from '../../../../../components/FooterDashboard';
 import NavbarDashboard from '../../../../../components/NavbarDashboard';
 import SideBarMenu from '../../../../../components/SideBarMenu';
 import { UserCard } from '../../../../../components/UserCard';
-// import Img3 from '../../assets/images/img/img3.png';
 import DetailTransferList from '../../../../../components/DetailTransferList';
 import ModalTransferConfirmation from '../../../../../components/ModalTransferConfirmation';
 import DashboardLayout from '../../../../../components/DashboardLayout';
@@ -15,7 +13,6 @@ import { FcManager } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfileOtherUser } from '../../../../../redux/actionAsync/user';
 import { useRouter } from 'next/router';
-// import { getUser } from '../../redux/actionAsync/user';
 
 function TransferConfirmation() {
   const dispatch = useDispatch();
