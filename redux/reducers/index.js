@@ -8,16 +8,23 @@ import profile from './profile';
 
 const authPersistConfig = {
     key: 'auth',
-    storage,
+    storage
+}
+
+const transactionPersistConfig = {
+    key: 'transaction',
+    storage
 }
 
 const persistedReducer = persistReducer(authPersistConfig, auth);
+
+const persistedReducerTransaction = persistReducer(transactionPersistConfig, transaction);
 
 const reducer = combineReducers({
     auth: persistedReducer,
     // auth,
     user,
-    transaction,
+    transaction: persistedReducerTransaction,
     profile
 })
 export default reducer;

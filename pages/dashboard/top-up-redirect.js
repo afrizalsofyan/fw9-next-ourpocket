@@ -11,7 +11,7 @@ function TopupRedirect() {
   //   const [show, setShow] = React.useState(true);
   React.useEffect(() => {
     if (redirectUrl) {
-      router.push(redirectUrl);
+      window.open()
     } else {
       console.log("empty url");
     }

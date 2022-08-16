@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { topupBalance } from '../../redux/actionAsync/transaction';
+import DashboardLayout from '../../components/DashboardLayout';
 
 const topupSchema = Yup.object().shape({
   amount: Yup.number().typeError('Field must number!!!').min(50000).required(),
@@ -57,7 +58,10 @@ const ModalTopupBalance = ({show, onHide}) => {
   const onTopupHandle = (val) => {
     const data = {amount: val.amount}
     dispatch(topupBalance(data)); 
-    router.push('/dashboard/top-up-redirect')   
+    window.open('/dashboard/top-up-redirect')
+    setTimeout(()=>{
+      router.push('/dashboard');
+    }, 100)
   }
   return (
     <Modal
@@ -81,11 +85,8 @@ function TopUp() {
   const openModal = () => setShowModal(true);
   return (
     <>
-      <NavbarDashboard titlePage='OPo - topup'/>
-      <Container as='section' className='g-0'>
-        <Row className='pt-5 gx-0 gx-md-3'>
-          <SideBarMenu />
-          <ContentLayout
+      <DashboardLayout>
+      <ContentLayout
             child={
               <>
                 <div>
@@ -173,9 +174,7 @@ function TopUp() {
               </>
             }
           />
-        </Row>
-      </Container>
-      <FooterDashboard />
+      </DashboardLayout>
     </>
   );
 }

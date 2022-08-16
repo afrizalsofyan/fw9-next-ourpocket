@@ -10,17 +10,15 @@ export const convertMoney = (amount) =>
 
 
 function DetailTransferList() {
-  // const amountData = useSelector((state)=> state.inputAmount.amount);
-  // const noteData = useSelector((state)=> state.inputAmount.note);
-  // const time = useSelector((state)=>state.inputAmount.time);
-    
-  // const amountToMoney = convertMoney(amountData);
+  const profile = useSelector((state)=>state.user.results);
+  const transferData = useSelector((state)=> state.transaction.dataTransfer);
+  const amountToMoney = convertMoney(transferData.amount);
   return (
     <div className='d-flex flex-column gap-3'>
-      {/* <CardDetailList title={'Amount'} content={amountToMoney}/>
-      <CardDetailList title={'Balance Left'} content={'Rp20.000'}/>
-      <CardDetailList title={'Date & Time'} content={time}/>
-      <CardDetailList title={'Notes'} content={noteData}/> */}
+      <CardDetailList title={'Amount'} content={amountToMoney}/>
+      <CardDetailList title={'Balance Left'} content={convertMoney(profile?.balance)}/>
+      <CardDetailList title={'Date & Time'} content={new Date().toLocaleString()}/>
+      <CardDetailList title={'Notes'} content={transferData.notes}/>
     </div>
   );
 }

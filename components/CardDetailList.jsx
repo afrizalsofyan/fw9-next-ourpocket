@@ -4,19 +4,19 @@ import { Card } from 'react-bootstrap';
 export const CardHistoryDashboard = ({imgUrl, name, type, status, amount}) => {
   return (
     <div className='d-flex flex-column gap-3 gap-sm-0 flex-sm-row justify-content-between shadow-sm p-3'>
-      <div className='d-flex gap-3'>
+      <div className='d-flex gap-3 w-100'>
         <div>
           {imgUrl}
         </div>
         <div className='d-flex flex-column justify-content-center'>
-          <span className='fw-semibold'>{name}</span>
+          <span className='fw-semibold text-break'>{name}</span>
           <span className='fw-light bg-grey-light'>
             {type}
           </span>
         </div>
       </div>
-      <div>
-        <span className={`fw-bold fs-5 ${status === 'failed' ? 'color-red' : 'color-green'}`}>
+      <div className='w-50 d-flex align-items-center justify-content-end'>
+        <span className={`text-end fw-bold fs-6 ${status === 'failed' ? 'color-red' : 'color-green'}`}>
           {type === 'transfer' ? `- ${amount}` : `+ ${amount}`}
         </span>
       </div>

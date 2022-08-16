@@ -16,6 +16,7 @@ import { getProfile } from '../redux/actionAsync/profile';
 import Cookie from 'js-cookie';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { historyTransaction } from '../redux/actionAsync/transaction';
 
 function NavbarDashboard({ titlePage }) {
   const dispatch = useDispatch();
@@ -23,14 +24,18 @@ function NavbarDashboard({ titlePage }) {
   const user = useSelector((state)=> state.auth.results);
   const profile = useSelector((state)=> state.user.results);
   const router = useRouter();
-  React.useEffect(() => {
-    if(token){
-      dispatch(getProfile(user.id ));
-    } else {
-      router.push('/login')
-    }
-  }, [dispatch, user, token, router]);
+  const data = {page: 1, limit: 5, filter: 'WEEK'};
+  const transaction = useSelector((state)=>state.transaction.results);
   
+  // React.useEffect(() => {
+  //   if(token){
+  //     dispatch(getProfile(user.id ));
+  //     // dispatch(historyTransaction(data))
+  //   } else {
+  //     router.push('/login')
+  //   }
+  // }, [dispatch, user, token, router]);
+  // console.log(transaction)
   const fullNameUser = `${profile?.firstName} ${profile?.lastName}`;
   return (
     <>
@@ -55,7 +60,7 @@ function NavbarDashboard({ titlePage }) {
               >
                 <a className='d-flex d-sm-flex flex-column flex-sm-row gap-3 align-items-center link-rm-line'>
                   <div className='d-flex img-profile-navbar-box'>
-                    {profile?.image !== null ? <Image src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${profile?.image}`} alt={fullNameUser} width={100} height={50} className='rounded-3'/> : <FcManager size={60}/>}
+                    {profile?.image !== null ? <Image src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${profile?.image}`} alt={fullNameUser} width={55} height={55} className='rounded-3 img-fluid'/> : <FcManager size={60}/>}
                   </div>
                   <div className='d-flex flex-column color-text-2'>
                      <span className='fw-bold'>{fullNameUser}</span>
@@ -70,32 +75,19 @@ function NavbarDashboard({ titlePage }) {
                 id='dropdown-menu-align-end'
                 variant='none border-0'
               >
-                <NotificationCardHeader title='Today' />
-                <NotificationCardItem
-                  eventKey={'1'}
-                  icon={<FiArrowDown size={24} className='color-red' />}
-                  descTransction='Transfered from Joshua Lee'
-                  amount={'220.000'}
-                />
-                <NotificationCardItem
-                  eventKey={'2'}
-                  icon={<FiArrowDown size={24} className='color-red' />}
-                  descTransction='Netflix subscription'
-                  amount={'149.000'}
-                />
-                <NotificationCardHeader title='This Week' />
-                <NotificationCardItem
-                  eventKey={'3'}
-                  icon={<FiArrowDown size={24} className='color-red' />}
-                  descTransction='Transfer to Jessica Lee'
-                  amount={'Rp100.000'}
-                />
-                <NotificationCardItem
-                  eventKey={'4'}
-                  icon={<FiArrowUp size={24} className='color-green-light' />}
-                  descTransction='Top up from BNI E-Banking'
-                  amount={'300.000'}
-                />
+                <NotificationCardHeader title='This Month' />
+                {transaction && transaction?.data?.map((el, index)=>{
+                  return (
+                    <>
+                      <NotificationCardItem
+                        eventKey={index}
+                        icon={<FiArrowDown size={24} className={`${el.type === 'accept' || el.type === 'topup' ? 'color-green' : 'color-red' }`} />}
+                        descTransction={`${el.type === 'accept'? 'Transfered from ' : el.type === 'topup'? 'Topup from ' :  'Send to '}${el.firstName}`}
+                        amount={el.amount}
+                      />
+                    </>
+                  )
+                })}
               </DropdownButton>
               <MenuNavbar />
             </Nav>

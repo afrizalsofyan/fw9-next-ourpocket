@@ -25,7 +25,7 @@ class TransactionInfoDashboard extends React.Component {
         <div className='d-flex flex-column bg-white p-4 gap-4 rounded-5 h-100 color-text-6'>
           <div className='d-flex flex-row justify-content-between'>
             <span className='fw-bold fs-6'>Transaction History</span>
-            <Link href='/dashboard/history'>
+            <Link href='/dashboard/history?page=1&limit=100&filter=MONTH'>
               <a className='link-rm-line' >
                 <span className='fw-light color-text-6'>See all</span>
               </a>
@@ -33,13 +33,13 @@ class TransactionInfoDashboard extends React.Component {
           </div>
           {/* item max 3 */}
           <div className='d-flex flex-column gap-3'>
-            {this.props.history !== undefined && this.props.history?.data?.map((el)=>{
+            {this.props.history !== undefined ? this.props.history?.data?.map((el)=>{
               return(
                 <CardHistoryDashboard 
                 imgUrl= {el?.image !== null ? <Image src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${el?.image}`} alt={el.firstName} width={50} height={50} className='rounded-3'/> : <FcSurvey size={60}/>}
                 type={el.status} amount={el.amount} name={`${el.firstName} ${el.lastName}`} status={el.status} key={el.id}/>
               );
-            })}
+            }):<div className='d-flex flex-column align-items-center justify-content-center text-center'><p className=''>No Transction</p></div>}
           </div>
         </div>
       </Col>

@@ -3,7 +3,7 @@ import Cookie from "js-cookie";
 
 export const http = () => {
     const headers = {};
-    const token = Cookie.get('token')
+    const token = Cookie.get('token');
     if(token) {
         headers.authorization = `Bearer ${token}`;
     }

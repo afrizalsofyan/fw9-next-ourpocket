@@ -2,17 +2,12 @@ import { Formik } from 'formik';
 import React from 'react';
 import { Form, Modal } from 'react-bootstrap';
 import { InputPin } from './InputField';
-// import * as Yup from 'yup';
 import { ButtonSubmit } from './ButtonAuth';
-import { useSelector } from 'react-redux';
-
-// const changePinSchema = Yup.object().shape({
-//     pin: Yup.array().of(
-//         Yup.string()
-//             .matches(/[0-9]{1}/, "Must number val")
-//             .required("Pin is required")
-//     ),
-// });
+import { useDispatch, useSelector } from 'react-redux';
+import { checkPin } from '../redux/actionAsync/profile';
+import { useRouter } from 'next/router';
+import { transferTransaction } from '../redux/actionAsync/transaction';
+import { addTransfer } from '../redux/reducers/transaction';
 
 const ChangePinForm = ({ errors, handleChange, handleSubmit, show, hide }) => {
   return (
@@ -85,26 +80,43 @@ const ChangePinForm = ({ errors, handleChange, handleSubmit, show, hide }) => {
 };
 
 function ModalTransferConfirmation({ show, onHide, id }) {
-  // const checkPin = useSelector((state)=>state.user.pin);
-  // const amount = useSelector((state)=> state.inputAmount.amount);
-  // const note = useSelector((state)=> state.inputAmount.note);
-  // const transferId = useSelector((state)=>state.inputAmount.type_id);
-  // const data = {note: note, amount: amount, type_id: transferId, recipient_id: id,  sender_id: }
+  const dispatch = useDispatch();
+  const router = useRouter()
+  const errorMsg = useSelector((state)=>state.profile.errorMsg);
+  const errorTransferMsg = useSelector((state)=>state.transaction.errorMsg);
+  const [pin, setPin] = React.useState();
+  const transferData = useSelector((state)=> state.transaction.dataTransfer);
+  const data = {recipient: router.query.idUser, amount: transferData.amount, notes: transferData.notes}
+  React.useEffect(()=>{
+    dispatch(checkPin(pin));
+  }, [pin, dispatch])
   const onSubmitPin = (val) => {
-    // if(val.pin[0] === '' || val.pin[1] === '' || val.pin[2] === '' || val.pin[3] === '' || val.pin[4] === '' || val.pin[5] === ''){
-    //   window.alert('Value is required');
-    // } else {
-    //   if (isNaN(parseInt(val.pin[0])) === false && isNaN(parseInt(val.pin[1])) === false && isNaN(parseInt(val.pin[2])) === false && isNaN(parseInt(val.pin[3])) === false && isNaN(parseInt(val.pin[4])) === false && isNaN(parseInt(val.pin[5])) === false){
-    //     const finalPin = val.pin.join('');
-    //     if (parseInt(finalPin) === checkPin) { 
-    //       redirect(`/home/transfer/${id}/transfer-confirmation/success`);
-    //     } else { 
-    //       redirect(`/home/transfer/${id}/transfer-confirmation/failed`);
-    //     }
-    //   } else {
-    //     window.alert('Please input with only number !!!');
-    //   }
-    // }
+    if(val.pin[0] === '' || val.pin[1] === '' || val.pin[2] === '' || val.pin[3] === '' || val.pin[4] === '' || val.pin[5] === ''){
+      window.alert('Value is required');
+    } else {
+      if (isNaN(parseInt(val.pin[0])) === false && isNaN(parseInt(val.pin[1])) === false && isNaN(parseInt(val.pin[2])) === false && isNaN(parseInt(val.pin[3])) === false && isNaN(parseInt(val.pin[4])) === false && isNaN(parseInt(val.pin[5])) === false){
+        const finalPin = val.pin.join('');
+        setPin(finalPin);
+        if(errorMsg) {
+          router.push('/dashboard/failed-transfer')
+        } else {
+          dispatch(transferTransaction(data));
+          if(errorTransferMsg){
+            dispatch(addTransfer(data))
+            router.push('/dashboard/failed-transfer');
+          } else {
+            router.push('/dashboard/success-transfer');
+          }
+        }
+        // if (parseInt(finalPin) === checkP in) { 
+        //   // redirect(`/home/transfer/${id}/transfer-confirmation/success`);
+        // } else { 
+        //   // redirect(`/home/transfer/${id}/transfer-confirmation/failed`);
+        // }
+      } else {
+        window.alert('Please input with only number !!!');
+      }
+    }
   };
   return (
     <Formik

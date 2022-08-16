@@ -1,12 +1,7 @@
 import React from 'react';
-import NavbarDashboard from '../../components/NavbarDashboard';
-import { Container, Row, Button, DropdownButton, ButtonGroup, Dropdown, Form } from 'react-bootstrap';
-import SideBarMenu from '../../components/SideBarMenu';
-import FooterDashboard from '../../components/FooterDashboard';
+import { Button, Form } from 'react-bootstrap';
 import ContentLayout from '../../components/ContentLayout';
 import UserCardHistoryIncreaseAmount, {UserCardHistoryDecreaseAmount} from '../../components/UserCard';
-// import DummyImage1 from '../../assets/images/img/img3.png';
-// import DummyImage2 from '../../assets/images/icons/logo.png';
 import {useDispatch, useSelector} from 'react-redux';
 import { historyTransaction } from '../../redux/actionAsync/transaction';
 import { convertMoney } from '../../components/DetailTransferList';
@@ -58,7 +53,7 @@ function History() {
           <>
             <div className='d-flex flex-column gap-4'>
               <h1 className='fw-bold fs-4 color-text-2'>Transaction History</h1>
-              <div className='d-flex flex-column gap-3 overflow-auto px-md-4 color-text-6'>
+              <div className='d-flex flex-column gap-3 px-md-4 color-text-6'>
                 
                 <div className='d-flex flex-column gap-3'>
                   
@@ -86,19 +81,21 @@ function History() {
                     filterType == null || filterType == 0 ? 'This All History' : `Filter by ${filterType == 1 ? 'Week': filterType == 2 ? 'Month' : filterType == 3 ? 'Year' : 'Month'}`
                   }
                 </span>
-                {historyData?.map((data)=>{
-                  return(
-                    <>
-                      <div key={data?.id}>
-                      <UserCardHistoryIncreaseAmount img_path={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${data.image}`} alt={`${data.fullName}`} name={data.fullName} type_transaction={data.type} amount={`${data.type != 'topup' ? '-' : '+'} ${convertMoney(data.amount)}`} status_transaction={data.status} time_transaction={new Date(data.createdAt).toLocaleString()} imgProfile={
-                        data.image != null ? 
-                        <Image className='we-3' src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${data.image}`} alt={data.fullName} width={60} height={60} /> : <FcManager size={60}/>
-                      }/>  
-                        {/* {data.type === 'accept' ? <UserCardHistoryDecreaseAmount img_path={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${data.image}`} alt={`${data.fullName}`} nameSender={data.sender} nameRecipient={data.recipient} type_transaction={data.type} amount={`- ${convertMoney(data.amount)}`}/> :} */}
-                      </div>
-                    </>
-                  );
-                })}
+                <div className="height-fixed-layout overflow-auto ">
+                  {historyData?.map((data)=>{
+                    return(
+                      <>
+                        <div key={data?.id}>
+                        <UserCardHistoryIncreaseAmount img_path={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${data.image}`} alt={`${data.fullName}`} name={data.fullName} type_transaction={data.type} amount={`${data.type === 'send' || data.type === 'payment' ? '-' : '+'} ${convertMoney(data.amount)}`} status_transaction={data.status} time_transaction={new Date(data.createdAt).toLocaleString()} imgProfile={
+                          data.image != null ? 
+                          <Image className='we-3' src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${data.image}`} alt={data.fullName} width={60} height={60} /> : <FcManager size={60}/>
+                        }/>  
+                          {/* {data.type === 'accept' ? <UserCardHistoryDecreaseAmount img_path={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${data.image}`} alt={`${data.fullName}`} nameSender={data.sender} nameRecipient={data.recipient} type_transaction={data.type} amount={`- ${convertMoney(data.amount)}`}/> :} */}
+                        </div>
+                      </>
+                    );
+                  })}
+                </div>
               </div>
               <div className='d-flex justify-content-center align-items-center gap-4'>
                 <Button 

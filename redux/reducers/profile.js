@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getAllUser } from "../actionAsync/user"
+import { checkPin, deleteImageProfile } from "../actionAsync/profile";
+import { getAllUser, getProfileOtherUser } from "../actionAsync/user"
 
 const initialState = {
     results: {},
+    resultsOtherUser: {},
     successMsg: null,
     errorMsg: null
 }
@@ -17,12 +19,37 @@ const profile = createSlice({
             state.errorMsg = null;
         }),
         build.addCase(getAllUser.fulfilled, (state, action)=>{
+            state.results = action.payload;
             state.successMsg = action.payload?.msg;
             state.errorMsg = action.payload?.errorMsg;
-            state.results = action.payload;
+        }),
+        build.addCase(getProfileOtherUser.pending, (state)=>{
+            state.successMsg = null;
+            state.errorMsg = null;
+        }),
+        build.addCase(getProfileOtherUser.fulfilled, (state, action)=> {
+            state.resultsOtherUser = action.payload;
+            state.successMsg = action.payload.msg;
+            state.errorMsg = action.payload.errorMsg;
+        }),
+        build.addCase(checkPin.pending, (state)=> {
+            state.successMsg = null;
+            state.errorMsg = null;
+        }),
+        build.addCase(checkPin.fulfilled, (state, action)=>{
+            state.successMsg = action.payload.msg;
+            state.errorMsg = action.payload.errorMsg;
+        }),
+        build.addCase(deleteImageProfile.pending, (state)=> {
+            state.successMsg = null;
+            state.errorMsg = null;
+        }),
+        build.addCase(deleteImageProfile.fulfilled, (state, action)=>{
+            state.successMsg = action.payload.msg;
+            state.errorMsg = action.payload.errorMsg;
         })
     }
 });
 
-export {getAllUser};
+export {getAllUser, getProfileOtherUser, checkPin, deleteImageProfile};
 export default profile.reducer;

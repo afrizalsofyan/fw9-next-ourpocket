@@ -89,6 +89,7 @@ function SideBarMenu() {
   // console.log(router)
   const onLogout = () => {
     dispatch(logout(()=>{
+      // console.log('logout')
       router.push('/login');
       // window.location.reload();
     }));  
@@ -111,7 +112,7 @@ function SideBarMenu() {
           </li>
           <li className='nav-item'>
             <Link
-              href='/dashboard/transfer'
+              href='/dashboard/transfer/all-users?page=1&limit=1000&search=&sort=firstName%20ASC'
               // className={`nav-link not-act border-0 d-flex flex-row gap-4 align-items-center ${pathUrl === '/home/transfer' || pathUrl === `/home/transfer/${id}` || pathUrl === `/home/transfer/${id}/tranferConfirmation` || pathUrl === `/home/transfer/${id}/tranferConfirmation/success` || pathUrl === `/home/transfer/${id}/tranferConfirmation/failed` ? 'active fw-bold' : ''}`}
             >
               <a className={`nav-link not-act border-0 d-flex flex-row gap-4 align-items-center ${router.pathname.includes('transfer') ? 'active fw-bold':''}`}>

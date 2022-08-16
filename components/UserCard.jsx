@@ -6,16 +6,16 @@ export const UserCard = ({url, imgProfile, name, phone }) => {
   return (
     <Link href={url} className='link-rm-line color-text-primary'>
       <div className='d-flex flex-column align-items-center flex-sm-row justify-content-between'>
-        <div className='d-flex flex-column flex-sm-row align-items-center gap-3'>
-          <div>
-            {imgProfile}
-          </div>
-          <div className='d-flex flex-column justify-content-center align-items-center align-items-md-start'>
-            <span className='fw-semibold color-text-6'>{name}</span>
-            <span className='fw-light bg-grey-light'>{phone}</span>
+          <div className='d-flex flex-column flex-sm-row align-items-center gap-3'>
+            <div>
+              {imgProfile}
+            </div>
+            <div className='d-flex flex-column justify-content-center align-items-center align-items-md-start'>
+              <span className='fw-semibold color-text-6'>{name}</span>
+              <span className='fw-light bg-grey-light'>{phone}</span>
+            </div>
           </div>
         </div>
-      </div>
     </Link>
   );
 };

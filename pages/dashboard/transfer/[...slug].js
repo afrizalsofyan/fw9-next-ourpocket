@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Form,
-  InputGroup,
-  Table,
-} from "react-bootstrap";
+import { Button, Form, InputGroup, Table } from "react-bootstrap";
 import ContentLayout from "../../../components/ContentLayout";
 import { UserCard } from "../../../components/UserCard";
 import { FiSearch } from "react-icons/fi";
@@ -13,62 +8,67 @@ import DashboardLayout from "../../../components/DashboardLayout";
 import { getAllUser } from "../../../redux/actionAsync/user";
 import Image from "next/image";
 import { FcDown, FcManager, FcUp } from "react-icons/fc";
+import Link from "next/link";
+import cookies from "next-cookies";
+import { http3 } from "../../../helpers/http3";
+import { useRouter } from "next/router";
 
-function Transfer() {
-  const users = useSelector((state) => state.profile.results);
-  const infoData = useSelector((state) => state.profile.results.pagination);
+function Transfer(props) {
+  const router = useRouter();
   const [limitFilter, setLimitFilter] = React.useState();
   const [sortNameFilter, setSortNameFilter] = React.useState("firstName ASC");
   const [sortPhoneFilter, setSortPhoneFilter] = React.useState("noTelp DESC");
   const [sortValue, setSortValue] = React.useState();
   const [pages, setPages] = React.useState(1);
   const [keyword, setKeyword] = React.useState();
-  const dispatch = useDispatch();
-  const data = {
-    page: pages ?? 1,
-    limit: limitFilter ?? 5,
-    keywords: keyword ?? '',
-    sort: sortValue ?? "firstName ASC",
-  };
 
   const handleLimit = (e) => {
     setLimitFilter(e.target.value);
+    router.push(`/dashboard/transfer/all-users?page=1&limit=${e.target.value}&search=&sort=firstName%20ASC`);
   };
 
   const handleSortName = () => {
     if (sortNameFilter === "firstName ASC") {
       setSortNameFilter("firstName DESC");
       setSortValue(sortNameFilter);
+      router.push(`/dashboard/transfer/all-users?page=1&limit=${limitFilter??1000}&search=&sort=firstName DESC`);
     } else if (sortNameFilter === "firstName DESC") {
       setSortNameFilter("firstName ASC");
       setSortValue(sortNameFilter);
-    }
+      router.push(`/dashboard/transfer/all-users?page=1&limit=${limitFilter??1000}&search=&sort=firstName ASC`);
+    };
+    
   };
 
   const handleSortPhone = () => {
     if (sortPhoneFilter === "noTelp ASC") {
       setSortPhoneFilter("noTelp DESC");
       setSortValue(sortPhoneFilter);
+      router.push(`/dashboard/transfer/all-users?page=1&limit=${limitFilter??1000}&search=&sort=noTelp DESC`);
     } else if (sortPhoneFilter === "noTelp DESC") {
       setSortPhoneFilter("noTelp ASC");
       setSortValue(sortPhoneFilter);
+      router.push(`/dashboard/transfer/all-users?page=1&limit=${limitFilter??1000}&search=&sort=noTelp ASC`);
     }
+    // router.push(`/dashboard/transfer/all-users?page=1&limit=${limitFilter??1000}&search=&sort=${sortValue??sortPhoneFilter}`);
   };
 
-  React.useEffect(() => {
-    dispatch(getAllUser(data));
-  }, [dispatch, limitFilter, sortValue, pages, keyword]);
+  // React.useEffect(() => {
+  //   dispatch(getAllUser(data));
+  // }, [dispatch, limitFilter, sortValue, pages, keyword]);
 
   const onNextPage = () => {
-    setPages(pages+1)
-  }
+    setPages(pages + 1);
+    router.push(`/dashboard/transfer/all-users?page=${+router.query.page+1}&limit=${router.query.limit}&search=&sort=${router.query.sort}`);
+  };
   const onPrevPage = () => {
-    setPages(pages-1)
-  }
-  const handleSearch = (e)=> {
-    setKeyword(e.target.value)
-  }
-
+    setPages(pages - 1);
+    router.push(`/dashboard/transfer/all-users?page=${+router.query.page-1}&limit=${router.query.limit}&search=&sort=${router.query.sort}`);
+  };
+  const handleSearch = (e) => {
+    setKeyword(e.target.value);
+    router.push(`/dashboard/transfer/all-users?page=1&limit=1000&search=${e.target.value}&sort=firstName ASC`);
+  };
   return (
     <>
       <DashboardLayout>
@@ -132,7 +132,11 @@ function Transfer() {
                             className="btn bg-transparent color-text-6 border-0 shadow-none"
                           >
                             <span>Name</span>
-                            {sortNameFilter === 'firstName ASC' ? <FcUp size={20} /> : <FcDown size={20} />}
+                            {sortNameFilter === "firstName ASC" ? (
+                              <FcUp size={20} />
+                            ) : (
+                              <FcDown size={20} />
+                            )}
                           </Button>
                         </th>
                         <th className="w-50 d-flex ">
@@ -141,43 +145,47 @@ function Transfer() {
                             className="btn bg-transparent color-text-6 border-0 shadow-none"
                           >
                             <span>Phone</span>
-                            {sortPhoneFilter === 'noTelp ASC' ? <FcUp size={20} /> : <FcDown size={20} />}
+                            {sortPhoneFilter === "noTelp ASC" ? (
+                              <FcUp size={20} />
+                            ) : (
+                              <FcDown size={20} />
+                            )}
                           </Button>
                         </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {users &&
-                        users?.data?.map((el) => {
+                      {props &&
+                        props?.data?.map((el) => {
                           return (
                             <>
                               <tr key={el.id} className="d-flex ">
-                                <td className="w-50 d-flex ">
-                                  <UserCard
-                                    url={`/home/transfer/${el.id}`}
-                                    imgProfile={
-                                      el.image ? (
-                                        <Image
-                                          className="we-3"
-                                          src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${el?.image}`}
-                                          alt=""
-                                          width={50}
-                                          height={50}
-                                        />
-                                      ) : (
-                                        <FcManager size={60} />
-                                      )
-                                    }
-                                    name={`${el.firstName} ${el.lastName}`}
-                                  />
-                                </td>
-                                <td className="w-50 d-flex ">
-                                  {el.noTelp ? el.noTelp : "-"}
-                                </td>
+                                <Link href={'/dashboard/transfer/'+el.id+'/transfer-amount'}>
+                                  <a className="w-100 d-flex gap-4 text-decoration-none align-items-center">
+                                    <td className="w-50 d-flex ">
+                                    <div className="d-flex flex-column align-items-center flex-sm-row justify-content-between">
+                                      <div className="d-flex flex-column flex-sm-row align-items-center gap-3">
+                                        {el.image ? (
+                                          <Image
+                                            className="we-3"
+                                            src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${el?.image}`}
+                                            alt=""
+                                            width={50}
+                                            height={50}
+                                          />
+                                        ) : (
+                                          <FcManager size={60} />
+                                        )}
+                                        <span className="fw-semibold color-text-6">{`${el.firstName} ${el.lastName}`}</span>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td className="w-50 d-flex ">
+                                    {el.noTelp ? el.noTelp : "-"}
+                                  </td>
+                                  </a>
+                                </Link>
                               </tr>
-                              {/* {el.noTelp ? (
-                            
-                          ) : null} */}
                             </>
                           );
                         })}
@@ -188,15 +196,17 @@ function Transfer() {
 
               <div className="d-flex justify-content-center align-items-center gap-4 mt-5">
                 <Button
-                  disabled={infoData?.page === 1}
+                  disabled={props.pagination.page === 1}
                   onClick={onPrevPage}
                   className="btn px-3 py-2"
                 >
                   Prev
                 </Button>
-                <span className='text-color-2 fs-4 text-decoration-underline'>{infoData?.page}</span>
+                <span className="text-color-2 fs-4 text-decoration-underline">
+                  {props.pagination.page}
+                </span>
                 <Button
-                  disabled={infoData?.page === infoData?.totalPage}
+                  disabled={props.pagination.page === props.pagination.totalPage}
                   onClick={onNextPage}
                   className="btn px-3 py-2"
                 >
@@ -209,6 +219,26 @@ function Transfer() {
       </DashboardLayout>
     </>
   );
+}
+
+//SSR
+
+export const getServerSideProps = async (context) => {
+  // console.log(context.query)
+  const cookiesData = cookies(context);
+  // console.log(cookiesData.token)
+  const {data} = await http3().get(`/user?page=${context.query.page}&limit=${context.query.limit}&search=${context.query.search}&sort=${context.query.sort}`, {
+    headers: {
+      Authorization: `Bearer ${cookiesData.token}`
+    }
+  })
+  console.log(data);
+  return {
+    props: {
+      data: data.data,
+      pagination: data.pagination
+    }
+  }
 }
 
 export default Transfer;

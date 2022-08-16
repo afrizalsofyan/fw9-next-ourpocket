@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { login } from "../../redux/actionAsync/auth";
 import Cookie from "js-cookie";
 import { getProfile } from "../../redux/actionAsync/profile";
+import Cookies from "js-cookie";
 
 const loginSheme = Yup.object().shape({
   email: Yup.string().email("invalid email address format").required(),
@@ -101,7 +102,8 @@ function Login() {
   const successMsg = useSelector((state)=>state.auth.successMsg);
   const user = useSelector((state)=> state.auth.results);
   const [visible, setVisible] = React.useState(false);
-  const token = useSelector((state) => state.auth?.token);
+  const token = useSelector((state) => state.auth.token);
+  const checkToken = Cookies.get('token');
   const handleVisible = () => {
     setVisible(true);
     setTimeout(() => {
@@ -109,12 +111,15 @@ function Login() {
     }, 4000);
   };
   React.useEffect(() => {
-    if(token) {
+    // console.log(token);
+    if(checkToken) {
       if(user.pin === null) {
         navigate.push('/create-pin');
       } else {
         navigate.push('/dashboard');
       }
+    } else {
+      navigate.push('/login');
     }
     
     handleVisible();
@@ -125,7 +130,7 @@ function Login() {
     dispatch(login(data));
     dispatch(getProfile(user.id ));
     handleVisible();
-    console.log(user);
+    // console.log(user);
   };
 
   return (

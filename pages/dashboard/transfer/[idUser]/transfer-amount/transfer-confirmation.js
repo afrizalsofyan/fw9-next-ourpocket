@@ -9,36 +9,55 @@ import { UserCard } from '../../../../../components/UserCard';
 // import Img3 from '../../assets/images/img/img3.png';
 import DetailTransferList from '../../../../../components/DetailTransferList';
 import ModalTransferConfirmation from '../../../../../components/ModalTransferConfirmation';
-// import { useDispatch, useSelector } from 'react-redux';
+import DashboardLayout from '../../../../../components/DashboardLayout';
+import Image from 'next/image';
+import { FcManager } from 'react-icons/fc';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfileOtherUser } from '../../../../../redux/actionAsync/user';
+import { useRouter } from 'next/router';
 // import { getUser } from '../../redux/actionAsync/user';
 
 function TransferConfirmation() {
-  
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [showModal, setShowModal] = React.useState(false);
   const closeModal = () => setShowModal(false);
   const openModal = () => setShowModal(true);
   // const {id} = useParams();
-  // const recipient = useSelector((state)=>state.user.dataUser);
+  const recipient = useSelector((state)=>state.profile.resultsOtherUser.data);
+  React.useEffect(() => {
+    dispatch(getProfileOtherUser(router.query.idUser));
+  }, [dispatch, router.query.idUser]);
   return (
     <>
-      <NavbarDashboard />
-      <Container as='section' className='g-0'>
-        <Row className='pt-5 gx-0 gx-md-3'>
-          <SideBarMenu />
-          <ContentLayout
+      <DashboardLayout>
+      <ContentLayout
             child={
               <>
-                <div className='d-flex flex-column gap-5 color-text-2'>
+                <div className='d-flex flex-column gap-4 color-text-2'>
                   <div>
                     <span className='fs-5 fw-bold'>Transfer To</span>
                   </div>
                   {/* User Card */}
-                  {/* <UserCard
-                    url={'/home/transfer/3'}
-                    img_path={Img3}
-                    name={`${recipient?.first_name} ${recipient?.last_name}`}
-                    phone={recipient?.phone_number}
-                  /> */}
+                  <div className="d-flex flex-column align-items-center flex-sm-row justify-content-between">
+                  <div className="d-flex flex-column flex-sm-row align-items-center gap-3">
+                    {recipient?.image ? (
+                      <Image
+                        className="we-3"
+                        src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${recipient?.image}`}
+                        alt=""
+                        width={50}
+                        height={50}
+                      />
+                    ) : (
+                      <FcManager size={60} />
+                    )}
+                    <div className="d-flex flex-column">
+                      <span className="fw-semibold color-text-6">{`${recipient?.firstName} ${recipient?.lastName}`}</span>
+                      <span className="fw-light color-text-6">{recipient?.noTelp ?? '-'}</span>
+                    </div>
+                  </div>
+                </div>
                   {/* Title Detail */}
                   <div>
                     <span className='fw-bold'>Details</span>
@@ -59,9 +78,7 @@ function TransferConfirmation() {
               </>
             }
           />
-        </Row>
-      </Container>
-      <FooterDashboard />
+      </DashboardLayout>
     </>
   );
 }

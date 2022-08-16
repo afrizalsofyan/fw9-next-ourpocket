@@ -11,3 +11,14 @@ export const getAllUser = createAsyncThunk('user/allUser', async (params)=> {
         return result;
     }
 });
+
+export const getProfileOtherUser = createAsyncThunk('othersUser/profile', async(id)=>{
+    const result = {}
+    try {
+        const {data} = await http().get(`/user/profile/${id}`);
+        return data;
+    } catch (error) {
+        result.message = error.response.data?.message;
+        return result;  
+    }
+});

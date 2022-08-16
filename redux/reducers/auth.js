@@ -17,7 +17,7 @@ const auth = createSlice({
     reducers: {
         logout: (state, action) => {
             Cookie.remove('token');
-            Cookie.remove('id');
+            // Cookie.remove('id');
             localStorage.removeItem('persist:auth')
             localStorage.removeItem('ally-supports-cache')
             action.payload();
@@ -40,6 +40,7 @@ const auth = createSlice({
                 if(token){
                     state.token = token;
                     Cookie.set('token', token);
+                    
                     // Cookie.set('id', id)
                 } else {
                     state.errorMsg = action.payload?.errorMsg;
