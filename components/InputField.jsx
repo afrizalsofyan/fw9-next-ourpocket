@@ -18,9 +18,9 @@ function InputField({ icon, placeholder, type, suffixIcon, isInvalid, validation
       <InputGroup.Text className={`bg-input-group rounded-0 ${isInvalid === true ? 'border-danger' : null}`}>
         {icon}
       </InputGroup.Text>
-      <Form.Control className='cstm-border rounded-0 color-text-6' name={name} type={type} placeholder={placeholder} isInvalid={isInvalid !== null && isInvalid} />
+      <Form.Control className={`rounded-0 color-text-6 cstm-border ${isInvalid === true ? 'border-danger' : null}`}  name={name} type={type} placeholder={placeholder} isInvalid={isInvalid !== null && isInvalid} />
       {suffixIcon != null ?
-        <InputGroup.Text className={`bg-input-group rounded-0  ${isInvalid === true ? 'border-danger' : null}`}>
+        <InputGroup.Text className={`bg-input-group eye-lock-pass rounded-0  ${isInvalid === true ? 'border-danger' : null}`}>
           {suffixIcon}
         </InputGroup.Text> : null
       }

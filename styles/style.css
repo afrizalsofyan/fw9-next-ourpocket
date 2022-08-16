@@ -5,7 +5,13 @@ body{
     margin: 0;
     font-family: 'Nunito Sans' !important;
     font-style: normal !important;
-    background: #EFFFFD;
+    background: #EFFFFD !important;
+}
+.cursor-pointer-1{
+    cursor: pointer !important;
+}
+.eye-lock-pass {
+    cursor: pointer !important;
 }
 .height-fixed-layout{
     height: 25em !important;
@@ -74,7 +80,7 @@ body{
 }
 .btn-prim-1:hover{
     background-color: #00d9ff !important;
-    border: 2px solid #FFFFFF !important;
+    /* border: 2px solid #FFFFFF !important; */
     color: #004b58 !important;
 }
 
@@ -373,19 +379,19 @@ li.link-wrapper > a.active {
 /* background */
 
 .bg-header-2{
-    background-image: url('../public/assets/img/bg-phone-v2.png');
+    background-image: url(../public/assets/img/bg-phone-v2.png);
     background-repeat: no-repeat;
     /* background-position: top right; */
     background-size: 60%;
 }
 .bg-header-3{
-    background-image: url('../public/assets/img/bg-v3.png');
+    background-image: url(../public/assets/img/bg-v3.png);
     background-repeat: no-repeat;
     /* background-position: top right; */
     background-size: 100%;
 }
 .bg-auth{
-    background-image: url('../public/assets/img/auth-mask.png');
+    background-image: url(../public/assets/img/auth-mask.png);
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -528,18 +534,23 @@ li.link-wrapper > a.active {
     border: 1px solid #A9A9A9 !important;
 }
 .cstm-border{
-    border: unset;
-    border-bottom: 2px solid #3a3d423b;
+    border: unset !important;
+    border-bottom: 2px solid #3a3d423b !important;
     padding: 20px 20px !important;
 }
 .cstm-border:focus{
-    border: unset;
-    border-bottom: 2px solid #3a3d423b;
+    border: unset !important;
+    border-bottom: 2px solid #3a3d423b !important;
+    box-shadow: none !important;
+}
+.cstm-border.border-danger:focus{
+    border: unset !important;
+    border-bottom: 2px solid #dc3545 !important;
     box-shadow: none !important;
 }
 .cstm-border2{
-    border: unset;
-    border-bottom: 2px solid #3a3d423b;
+    border: unset !important;
+    border-bottom: 2px solid #3a3d423b !important;
     padding: 10px 0 !important;
 }
 .cstm-border2:focus{
@@ -548,12 +559,12 @@ li.link-wrapper > a.active {
     box-shadow: none !important;
 }
 .bg-input-group{
-    background-color: transparent;
-    border: unset;
-    border-bottom: 2px solid #3a3d423b;
+    background-color: transparent !important;
+    border: unset !important;
+    border-bottom: 2px solid #3a3d423b !important;
 }
 .bg-input-group:focus{
-    border: 2px solid #3a3d423b;
+    border: 2px solid #3a3d423b !important;
 }
 .pin-wrapper{
     max-height: 60px;
@@ -755,7 +766,7 @@ input::-webkit-inner-spin-button {
         padding-bottom: 50px;
     }
     .bg-header-3{
-        background-image: url('../public/assets/img/bg-v3.png');
+        background-image: url(../public/assets/img/bg-v3.png);
         background-repeat: no-repeat;
         /* background-position: top right; */
         background-size: cover;
@@ -900,7 +911,7 @@ input::-webkit-inner-spin-button {
         width: 100%;
     }
     .bg-header-1{
-        background-image: url('../public/assets/img/bg-v1.png');
+        background-image: url(/assets/img/bg-v1.png);
         background-repeat: no-repeat;
         background-position: top right;
         background-size: 50%;
@@ -932,7 +943,7 @@ input::-webkit-inner-spin-button {
         width: 100%;
     }
     .bg-header-1{
-        background-image: url('../public/assets/img/bg-v1.png');
+        background-image: url(/assets/img/bg-v1.png);
         background-repeat: no-repeat;
         background-position: top right;
         background-size: 50%;
@@ -994,7 +1005,7 @@ input::-webkit-inner-spin-button {
         width: 100%;
     }
     .bg-header-1{
-        background-image: url('../public/assets/img/bg-v1.png');
+        background-image: url(/assets/img/bg-v1.png);
         background-repeat: no-repeat;
         background-position: top right;
         background-size: 40%;
@@ -1024,7 +1035,7 @@ input::-webkit-inner-spin-button {
         width: 100%;
     }
     .bg-header-1{
-        background-image: url('../public/assets/img/bg-v1.png');
+        background-image: url(/assets/img/bg-v1.png);
         background-repeat: no-repeat;
         background-position: top right;
         background-size: 35%;

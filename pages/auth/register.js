@@ -147,9 +147,10 @@ const AuthRegister = ({ errors, handleSubmit, handleChange }) => {
               Already have an account? Let&apos;s{" "}
               <Link
                 href="/login"
-                className="link-rm-line fw-bold color-text-primary"
               >
-                Login
+                <a className="link-rm-line fw-bold color-text-primary">
+                  Login
+                </a>
               </Link>
             </span>
           </div>

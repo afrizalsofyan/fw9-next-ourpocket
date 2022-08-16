@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form, Alert } from "react-bootstrap";
 import AuthBanner from "../../components/AuthBanner";
 import TitleAuthForm from "../../components/TitleAuthForm";
 import { ButtonSubmit } from "../../components/ButtonAuth";
@@ -39,7 +39,8 @@ function CreatePin() {
   const errorMsg = useSelector((state)=>state.auth.errorMsg);
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.results);
-  
+  const [alert, setAlert] = React.useState();
+  const [showAlert, setShowAlert] = React.useState(false);
   React.useEffect(()=> {
     if(token) {
       if(user.pin != null){
@@ -48,11 +49,14 @@ function CreatePin() {
     } else {
       navigate.push('/login');
     }
-  })
+    
+  }, [token, showAlert, alert, user.pin, navigate])
 
   const submitPin = (value) => {
     if(value.pin1 === '' || value.pin2 === '' || value.pin3 === '' || value.pin4 === '' || value.pin5 === '' || value.pin6 === ''){
-      window.alert('Value is required');
+      // window.alert('Value is required');
+      setAlert('Value is required')
+      setShowAlert(true)
     } else {
       if (
         isNaN(parseInt(value.pin1)) === false &&
@@ -77,7 +81,9 @@ function CreatePin() {
           navigate.push("/create-pin-success");
         }
       } else {
-        window.alert("Please input with only number !!!");
+        // window.alert("Please input with only number !!!");
+        setAlert('Please input with only number !!!')
+        setShowAlert(true)
       }
     }
   };
@@ -101,6 +107,8 @@ function CreatePin() {
                 "Transfering money is eassier than ever, you can access Zwallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!"
               }
             />
+            {alert && <Alert variant="danger" show={showAlert}>{alert}</Alert>
+            }
             <Formik
               onSubmit={submitPin}
               initialValues={{

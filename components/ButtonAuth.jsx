@@ -24,7 +24,7 @@ export const ButtonMenuProfile = ({menuName, suffixIcon, to}) => {
 export const ButtonSubmit = ({textButton, buttonType, disable}) => {
   return(
     <div className='d-grid'>
-      <Button disabled={disable ?? false} className={`${buttonType === 'sm' || buttonType !== null ? 'btn border-0 px-4 py-2 btn-prim-1' : 'btn btn-lg fw-bold btn-prim-1'}`} type='submit'>{textButton}</Button>
+      <Button disabled={disable ?? false} className={`${buttonType === 'sm' || buttonType !== null ? 'btn border-0 px-4 py-2 btn-prim-1' : 'btn  btn-lg fw-bold btn-prim-1'}`} type='submit'>{textButton}</Button>
     </div>
   );
 };

@@ -12,10 +12,12 @@ function AuthBanner() {
     
       <Image alt='bg-img' src={ImageBgAuth} layout='fill' className=''/>
       <Row className='position-relative z-1'>
-        <Link href='/' className='link-rm-line'>
-          <Col xs={12} className='px-md-5'>
-            <span className='color-text-4 fs-1 fw-bold logo-style'>OurPocket</span>
-          </Col>
+        <Link href='/' >
+          <a className='link-rm-line'>
+            <Col xs={12} className='px-md-5'>
+              <span className='color-text-4 fs-1 fw-bold logo-style'>OurPocket</span>
+            </Col>
+          </a>
         </Link>
         <Col sm={12} className='d-flex w-100 flex-column gap-5 mt-4 justify-content-center'>
           <div className='d-flex flex-row align-items-center px-md-5'>
