@@ -86,7 +86,7 @@ function Transfer(props) {
                 </span>
                 <Form.Control
                   type="text"
-                  className="ps-5 border-0 bg-grey-input rounded-3 py-3 color-text-6"
+                  className="ps-5 border-1 bg-grey-input rounded-3 py-3 color-text-6 search-focus-input"
                   placeholder="Search by name or phone number"
                   onChange={handleSearch}
                 />

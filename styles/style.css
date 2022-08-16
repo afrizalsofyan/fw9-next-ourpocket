@@ -7,6 +7,9 @@ body{
     font-style: normal !important;
     background: #EFFFFD !important;
 }
+input.search-focus-input:focus{
+    border: 1px solid #007c92 !important;
+}
 .cursor-pointer-1{
     cursor: pointer !important;
 }
@@ -619,10 +622,10 @@ input::-webkit-inner-spin-button {
     background-size: 0.5em;
 }
 .notes-custom{
-    border: unset;
-    border-bottom: 1px solid #A9A9A9CC;
-    border-radius: unset;
-    overflow-x: scroll;
+    border: unset !important;
+    border-bottom: 1px solid #A9A9A9CC !important;
+    border-radius: unset !important;
+    overflow-x: scroll !important;
 }
 .icon-grey-light{
     color: #A9A9A9CC;
@@ -655,11 +658,11 @@ input::-webkit-inner-spin-button {
     color: #4CEDB3;
 }
 .bg-btn-profile{
-    background-color: #E5E8ED;
+    background-color: #E5E8ED !important;
 }
 .bg-btn-profile:hover{
-    background-color: #d9e0eb;
-    border: 1px solid #d9e0eb;
+    background-color: #d9e0eb !important;
+    border: 1px solid #d9e0eb !important;
     box-shadow: none !important;
 }
 .color-btn-text-profile{

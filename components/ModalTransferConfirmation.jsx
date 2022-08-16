@@ -87,27 +87,28 @@ function ModalTransferConfirmation({ show, onHide, id }) {
   const [pin, setPin] = React.useState();
   const transferData = useSelector((state)=> state.transaction.dataTransfer);
   const data = {recipient: router.query.idUser, amount: transferData.amount, notes: transferData.notes}
-  React.useEffect(()=>{
-    dispatch(checkPin(pin));
-  }, [pin, dispatch])
+
   const onSubmitPin = (val) => {
     if(val.pin[0] === '' || val.pin[1] === '' || val.pin[2] === '' || val.pin[3] === '' || val.pin[4] === '' || val.pin[5] === ''){
       window.alert('Value is required');
     } else {
       if (isNaN(parseInt(val.pin[0])) === false && isNaN(parseInt(val.pin[1])) === false && isNaN(parseInt(val.pin[2])) === false && isNaN(parseInt(val.pin[3])) === false && isNaN(parseInt(val.pin[4])) === false && isNaN(parseInt(val.pin[5])) === false){
         const finalPin = val.pin.join('');
-        setPin(finalPin);
-        if(errorMsg) {
-          router.push('/dashboard/failed-transfer')
-        } else {
-          dispatch(transferTransaction(data));
-          if(errorTransferMsg){
-            dispatch(addTransfer(data))
-            router.push('/dashboard/failed-transfer');
-          } else {
-            router.push('/dashboard/success-transfer');
-          }
-        }
+        // setPin(finalPin);
+        dispatch(checkPin(finalPin));
+        // setTimeout(() => {
+        //   if(errorMsg) {
+        //     router.push('/dashboard/failed-transfer')
+        //   } else {
+        //     dispatch(transferTransaction(data));
+        //     if(errorTransferMsg){
+        //       dispatch(addTransfer(data))
+        //       router.push('/dashboard/failed-transfer');
+        //     } else {
+        //       router.push('/dashboard/success-transfer');
+        //     }
+        //   }
+        // }, 3000);
         // if (parseInt(finalPin) === checkP in) { 
         //   // redirect(`/home/transfer/${id}/transfer-confirmation/success`);
         // } else { 
@@ -118,6 +119,23 @@ function ModalTransferConfirmation({ show, onHide, id }) {
       }
     }
   };
+
+  React.useEffect(()=>{
+    if(errorMsg) {
+      router.push('/dashboard/failed-transfer')
+    } else {
+      dispatch(transferTransaction(data));
+      if(errorTransferMsg){
+        dispatch(addTransfer(data))
+        router.push('/dashboard/failed-transfer');
+      } else {
+        router.push('/dashboard/success-transfer');
+      }
+    }
+    // setTimeout(() => {
+    // }, 5000);
+  }, [pin, data, dispatch])
+  
   return (
     <Formik
       onSubmit={onSubmitPin}

@@ -8,14 +8,18 @@ function TopupRedirect() {
   const redirectUrl = useSelector(
     (state) => state.transaction.results.redirectUrl
   );
+  console.log(redirectUrl)
   //   const [show, setShow] = React.useState(true);
   React.useEffect(() => {
     if (redirectUrl) {
-      window.open()
+      window.open(redirectUrl)
+      setTimeout(()=>{
+        router.push('/dashboard')
+      }, 200)
     } else {
       console.log("empty url");
     }
-  }, [redirectUrl]);
+  }, [redirectUrl, router]);
   return (
     <>
       <div className="min-vh-100 w-100 d-flex flex-column justify-content-center align-items-center gap-5">

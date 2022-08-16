@@ -58,10 +58,10 @@ const ModalTopupBalance = ({show, onHide}) => {
   const onTopupHandle = (val) => {
     const data = {amount: val.amount}
     dispatch(topupBalance(data)); 
-    window.open('/dashboard/top-up-redirect')
-    setTimeout(()=>{
-      router.push('/dashboard');
-    }, 100)
+    router.push('/dashboard/top-up-redirect')
+    // setTimeout(()=>{
+    //   router.push('/dashboard');
+    // }, 100)
   }
   return (
     <Modal

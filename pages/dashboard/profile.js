@@ -71,7 +71,7 @@ function Profile() {
                     to='/dashboard/profile/edit-profile'
                     deleteImg={
                       <>
-                        <Button disabled={profile?.image != null ? false : true} onClick={handleDeleteImg} className='btn bg-transparent link-text bg-grey-light d-flex gap-2 align-items-center border-0 shadow-none'>
+                        <Button disabled={profile?.image != null ? false : true} onClick={handleDeleteImg} className='btn bg-transparent text-danger border-0 shadow-none'>
                           <FaTrash size={20}/>
                           <span>Delete Image</span>
                         </Button>
