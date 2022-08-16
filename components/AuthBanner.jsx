@@ -3,12 +3,15 @@ import Link from 'next/link';
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import ImagePhoneAuth from '../public/assets/img/auth-phone-img.png';
+import ImageBgAuth from '../public/assets/img/auth-mask.png';
 // import {Link} from 'react-router-dom';
 
 function AuthBanner() {
   return (
-    <Col xs={12} md={7} className='bg-auth px-5 py-5 d-flex'>
-      <Row>
+    <Col xs={12} md={7} className='px-5 py-5 d-flex position-relative'>
+    
+      <Image alt='bg-img' src={ImageBgAuth} layout='fill' className=''/>
+      <Row className='position-relative z-1'>
         <Link href='/' className='link-rm-line'>
           <Col xs={12} className='px-md-5'>
             <span className='color-text-4 fs-1 fw-bold logo-style'>OurPocket</span>
