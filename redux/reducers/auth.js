@@ -18,6 +18,7 @@ const auth = createSlice({
         logout: (state, action) => {
             Cookie.remove('token');
             // Cookie.remove('id');
+            localStorage.removeItem('persist:transaction')
             localStorage.removeItem('persist:auth')
             localStorage.removeItem('ally-supports-cache')
             action.payload();
