@@ -373,19 +373,19 @@ li.link-wrapper > a.active {
 /* background */
 
 .bg-header-2{
-    background-image: url(../public/assets/img/bg-phone-v2.png);
+    background-image: url('../public/assets/img/bg-phone-v2.png');
     background-repeat: no-repeat;
     /* background-position: top right; */
     background-size: 60%;
 }
 .bg-header-3{
-    background-image: url(../public/assets/img/bg-v3.png);
+    background-image: url('../public/assets/img/bg-v3.png');
     background-repeat: no-repeat;
     /* background-position: top right; */
     background-size: 100%;
 }
 .bg-auth{
-    background-image: url(../public/assets/img/auth-mask.png);
+    background-image: url('../public/assets/img/auth-mask.png');
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -755,7 +755,7 @@ input::-webkit-inner-spin-button {
         padding-bottom: 50px;
     }
     .bg-header-3{
-        background-image: url(../public/assets/img/bg-v3.png);
+        background-image: url('../public/assets/img/bg-v3.png');
         background-repeat: no-repeat;
         /* background-position: top right; */
         background-size: cover;
@@ -900,7 +900,7 @@ input::-webkit-inner-spin-button {
         width: 100%;
     }
     .bg-header-1{
-        background-image: url(../public/assets/img/bg-v1.png);
+        background-image: url('../public/assets/img/bg-v1.png');
         background-repeat: no-repeat;
         background-position: top right;
         background-size: 50%;
@@ -932,7 +932,7 @@ input::-webkit-inner-spin-button {
         width: 100%;
     }
     .bg-header-1{
-        background-image: url(../public/assets/img/bg-v1.png);
+        background-image: url('../public/assets/img/bg-v1.png');
         background-repeat: no-repeat;
         background-position: top right;
         background-size: 50%;
@@ -994,7 +994,7 @@ input::-webkit-inner-spin-button {
         width: 100%;
     }
     .bg-header-1{
-        background-image: url(../public/assets/img/bg-v1.png);
+        background-image: url('../public/assets/img/bg-v1.png');
         background-repeat: no-repeat;
         background-position: top right;
         background-size: 40%;
@@ -1024,7 +1024,7 @@ input::-webkit-inner-spin-button {
         width: 100%;
     }
     .bg-header-1{
-        background-image: url(../public/assets/img/bg-v1.png);
+        background-image: url('../public/assets/img/bg-v1.png');
         background-repeat: no-repeat;
         background-position: top right;
         background-size: 35%;
