@@ -107,8 +107,8 @@ function ModalTransferConfirmation({ show, onHide, id }) {
   };
 
   React.useEffect(()=> {
-    console.log(errorMsg);
-    console.log(successMsg);
+    // console.log(errorMsg);
+    // console.log(successMsg);
     if(errorMsg != null && successMsg == null) {
       router.push('/dashboard/failed-transfer');
     } else if(errorMsg == null && successMsg != null) {

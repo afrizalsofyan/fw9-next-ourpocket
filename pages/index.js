@@ -16,6 +16,60 @@ import Logo6 from '../public/assets/icons/company_logo6.svg';
 import { FiDownload, FiLock, FiPhone } from 'react-icons/fi';
 import React from 'react';
 
+const static_data = [
+  {
+    icon: <FiPhone size={30} />,
+    title: '24/7 Support',
+    content: 'We have 24/7 contact support so you can contact us whenever you want and we will respond it.'
+  },
+  {
+    icon: <FiLock size={30} />,
+    title: 'Data Privacy',
+    content: 'We make sure your data is safe in our database and we will encrypt any data you submitted to us.'
+  },
+  {
+    icon: <FiDownload size={30} />,
+    title: 'Easy Download',
+    content: 'OurPocket is 100% totally free to use it’s now available on Google Play Store and App Store.'
+  },
+];
+const static_data_logo_1 = [Logo1, Logo2, Logo3];
+const static_data_logo_2 = [Logo4, Logo5, Logo6];
+const static_feature = [
+  {
+    title: '. Small Fee',
+    content: 'We only charge 5% of every success transaction done in OurPocket app.'
+  },
+  {
+    title: '. Data Secured',
+    content: 'All your data is secured properly in our system and it\'s encrypted.'
+  },
+  {
+    title: '. User Friendly',
+    content: 'OurPocket come up with modern and sleek design and not complicated.'
+  },
+];
+const static_review = [
+  {
+    img: Icon4,
+    alt: 'icon4',
+    title: 'Sherina Chaw',
+    content: '\“I use this app since 2 years ago and this is the best app that I\'ve ever use in my entire life\”'
+  },
+  {
+    img: Icon5,
+    alt: 'icon5',
+    title: 'Jessica Mera',
+    content: '“I use OurPocket to manage all financial needs. It\'s super easy to use and it\'s 100% free app”'
+  },
+  {
+    img: Icon6,
+    alt: 'icon6',
+    title: 'Robert Chandler',
+    content: '“Since I\'m using this app, I\'m not going to move to another similar app. Thank you OurPocket!”'
+  },
+];
+
 export class CardLandingPage extends React.Component {
   state = {
     Image: this.props.Image,
@@ -182,21 +236,16 @@ export default function Home() {
               </p>
             </div>
             <div className='about-section-v1'>
-              <CardLandingPage
-                icon={<FiPhone size={30} />}
-                title='24/7 Support'
-                content='We have 24/7 contact support so you can contact us whenever you want and we will respond it.'
-              />
-              <CardLandingPage
-                icon={<FiLock size={30} />}
-                title='Data Privacy'
-                content='We make sure your data is safe in our database and we will encrypt any data you submitted to us.'
-              />
-              <CardLandingPage
-                icon={<FiDownload size={30} />}
-                title='Easy Download'
-                content='Zwallet is 100% totally free to use it’s now available on Google Play Store and App Store.'
-              />
+              {static_data.map((e, i) => {
+                return (
+                  <CardLandingPage
+                    icon={e.icon}
+                    title={e.title}
+                    content={e.content}
+                    key={'key '+i}
+                  />
+                );
+              })}
             </div>
           </main>
         </div>
@@ -216,14 +265,22 @@ export default function Home() {
             </div>
             <div className='flx-col jstfy-center'>
               <div className='partner-section-v1'>
-                <Image src={Logo1} alt='partnerlogo'/>
-                <Image src={Logo2} alt='partnerlogo'/>
-                <Image src={Logo3} alt='partnerlogo'/>
+                {static_data_logo_1.map((e, i) => {
+                  return (
+                    <>
+                      <Image src={e} alt='partnerlogo' key={'kl1f_'+i}/>
+                    </>
+                  );
+                })}
               </div>
               <div className='partner-section-v1'>
-                <Image src={Logo6} alt='partnerlogo'/>
-                <Image src={Logo4} alt='partnerlogo'/>
-                <Image src={Logo5} alt='partnerlogo'/>
+                {static_data_logo_2.map((e, i) => {
+                  return (
+                    <>
+                      <Image src={e} alt='partnerlogo' key={'kl2f_'+i}/>
+                    </>
+                  );
+                })}
               </div>
             </div>
           </main>
@@ -245,11 +302,15 @@ export default function Home() {
             <main className='text-content-banner gap-20'>
               <h2 className='fnt-header'>
                 All The <span className='color-text-5'>Great</span> <br />{' '}
-                Zwallet Features.
+                OurPocket Features.
               </h2>
-              <Card2LandingPage number={1} title='. Small Fee' content='We only charge 5% of every success transaction done in Zwallet app.' />
-              <Card2LandingPage number={2} title='. Data Secured' content="All your data is secured properly in our system and it's encrypted." />
-              <Card2LandingPage number={3} title='. User Friendly' content='Zwallet come up with modern and sleek design and not complicated.' />
+              {static_feature.map((e, i) => {
+                return (
+                  <>
+                    <Card2LandingPage number={i+1} title={e.title} content={e.content} key={'kff'+i} />
+                  </>
+                );
+              })}
             </main>
           </div>
         </div>
@@ -267,9 +328,13 @@ export default function Home() {
               </p>
             </div>
             <main className='about-section-v1'>
-              <CardLandingPage Image={<Image src={Icon4} alt='icon4.png' width='100%' height='100%' />} title='Sherina Chaw' content="“I use this app since 2 years ago and this is the best app that I've ever use in my entire life”"/>
-              <CardLandingPage Image={<Image src={Icon5} alt='icon5.png' width='100%' height='100%' />} title='Jessica Mera' content="“I use Zwallet to manage all financial needs. It's super easy to use and it's 100% free app”"/>
-              <CardLandingPage Image={<Image src={Icon6} alt='icon6.png' width='100%' height='100%' />} title='Robert Chandler' content="“Since I'm using this app, I'm not going to move to another similar app. Thank you Zwallet!”"/>
+              {static_review.map((e, i) => {
+                return (
+                  <>
+                    <CardLandingPage Image={<Image src={e.img} alt={e.alt} width='100%' height='100%' />} title={e.title} content={e.content}/>
+                  </>
+                );
+              })}
             </main>
           </div>
         </div>

@@ -21,7 +21,7 @@ function History() {
   const [filterType, setFilterType] = React.useState();
   const [page, setPage] = React.useState(1);
   const data = {page: page, limit: limitFilter == 1 ? 3 : limitFilter == 2 ? 5 : limitFilter == 3 ? 7 : limitFilter == 4 ? 10 : 3, filter: filterType == 1 ? 'WEEK': filterType == 2 ? 'MONTH' : filterType == 3 ? 'YEAR' : 'MONTH'};
-  console.log(limitFilter);
+  // console.log(limitFilter);
   const handleLimit = (e) => {
     setLimitFilter(e.target.value);
   };

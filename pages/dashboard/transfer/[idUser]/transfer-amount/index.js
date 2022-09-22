@@ -66,7 +66,7 @@ export const AmountForm = ({ errors, handleSubmit, handleChange }) => {
 
 function TransferAmount() {
   const router = useRouter();
-  console.log(router.query);
+  // console.log(router.query);
   const dispatch = useDispatch();
   const recipient = useSelector((state) => state.profile.resultsOtherUser.data);
   const profile = useSelector((state)=>state.user.results);

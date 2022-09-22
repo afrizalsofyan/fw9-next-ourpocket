@@ -8,7 +8,7 @@ function TopupRedirect() {
   const redirectUrl = useSelector(
     (state) => state.transaction.results.redirectUrl
   );
-  console.log(redirectUrl);
+  // console.log(redirectUrl);
   //   const [show, setShow] = React.useState(true);
   React.useEffect(() => {
     if (redirectUrl) {

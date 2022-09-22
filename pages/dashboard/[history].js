@@ -18,7 +18,7 @@ import { useRouter } from 'next/router';
 
 function History(props) {
   const router = useRouter();
-  console.log(router.query);
+  // console.log(router.query);
   const [data, setData] = React.useState(props.data);
   const [infoData, setInfoData] = React.useState(props.pagination);
   const [limitFilter, setLimitFilter] = React.useState();

@@ -232,7 +232,7 @@ export const getServerSideProps = async (context) => {
       Authorization: `Bearer ${cookiesData.token}`
     }
   });
-  console.log(data);
+  // console.log(data);
   return {
     props: {
       data: data.data,

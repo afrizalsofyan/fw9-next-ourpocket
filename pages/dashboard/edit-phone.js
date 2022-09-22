@@ -40,7 +40,7 @@ function AddNewPhone() {
   const user = useSelector((state)=> state.auth.results);
   const errorMsg = useSelector((state)=>state.user.errorMsg);
   const onSubmitPhone = async (val) => {
-    console.log(val);
+    // console.log(val);
     if(val.phone === ''){
       window.alert('Field is required !!!');
     } else {

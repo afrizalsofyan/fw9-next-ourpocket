@@ -64,7 +64,6 @@ function Transfer() {
   const handleSearch = (e) => {
     setKeyword(e.target.value);
   };
-  console.log(users);
   return (
     <>
       <DashboardLayout>

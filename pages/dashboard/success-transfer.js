@@ -23,7 +23,7 @@ function SuccessTransfer() {
   const recipient = useSelector((state)=>state.profile.resultsOtherUser.data);
   const idTransaction = useSelector((state)=>state.transaction.idTransaction);
   const exportLink = useSelector((state)=>state.transaction.resultsExport);
-  console.log(idTransaction);
+  // console.log(idTransaction);
   const handleExportPdf = () => {
     dispatch(exportTransaction(idTransaction));
     if(exportLink){
