@@ -1,34 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align='center'>OurPocket Website</h1>
 
-## Getting Started
+<p align="center">
+  <img src="https://res.cloudinary.com/asadev619/image/upload/v1663849417/next-landing_gswceb.png" alt="porto img"/>
+  <img src="https://res.cloudinary.com/asadev619/image/upload/v1663849417/next-dashboard_hay6jf.png" width="240"  alt="porto img"/>
+  <img src="https://res.cloudinary.com/asadev619/image/upload/v1663849417/next-transfer_nbpbwu.png" width="208" alt="porto img"/>
+  <img src="https://res.cloudinary.com/asadev619/image/upload/v1663849416/next_profile_rafekh.png" width="208"  alt="porto img"/>
+</p>
 
-First, run the development server:
+# About
+OurPocket Aplication is a application for transfer money, save money and etc based on website.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+# Build with
+[![Next v12](https://img.shields.io/badge/Next%20-v12.2.4-brightgreen.svg?style=flat)](https://nextjs.org/docs/getting-started)
+[![Bootstrap v5](https://img.shields.io/badge/Boostrtap%20-v5.2.0-blue.svg?style=flat)](https://github.com/tailwindlabs/tailwindcss)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Requirements
+1. [Node Js](https://nodejs.dev/en/) V-14
+2. [Backend API](https://fazzpay-9dn2jaz6f-bagusth15.vercel.app/)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+# Getting Started
+1. Download this Project or Clone this project
+2. Open this project in your editor then run terminal and type `yarn`
+3. Change env value in `next.config.js` file project. Example: `BASE_URL: 'your backend base url'` 
+4. Run this project with type `yarn dev` or `npm dev` on terminal.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# Technology
+- [Next js](https://nextjs.org/)
+- [Bootstrap](https://getbootstrap.com/)
+- [React Bootstrap](https://react-bootstrap.github.io/)
+- [axios](https://github.com/axios/axios)
+- [react-redux](https://react-redux.js.org/)
+- [redux-thunk](https://github.com/reduxjs/redux-thunk)
+- [redux-persist](https://github.com/rt2zz/redux-persist)
