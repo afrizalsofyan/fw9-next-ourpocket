@@ -7,7 +7,7 @@ import DummyChart from '../public/assets/img/graphic.png';
 function ChartInfoDashboard() {
   return (
     <>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js" async/>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js' async/>
       <Col sm={12} md={6} className='mb-md-0'>
         <div className='d-flex flex-column justify-content-between bg-white p-5 gap-4 rounded-5 h-100'>
           <div className='d-flex flex-column gap-3 gap-sm-0 flex-sm-row justify-content-between align-items-center text-center text-sm-start color-text-primary'>

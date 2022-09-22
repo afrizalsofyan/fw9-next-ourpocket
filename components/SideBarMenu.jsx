@@ -128,7 +128,7 @@ function SideBarMenu() {
               // className={`nav-link not-act border-0 d-flex flex-row gap-4 align-items-center ${pathUrl === '/home/topup' ? 'active fw-bold' : ''}`}
             >
               <a className={`nav-link not-act border-0 d-flex flex-row gap-4 align-items-center ${router.pathname.includes('top-up') ? 'active fw-bold':''}`}>
-              {router.pathname.includes('top-up') ? <Image src={ActiveIcon} alt='activeimg' /> : null}
+                {router.pathname.includes('top-up') ? <Image src={ActiveIcon} alt='activeimg' /> : null}
                 <FiPlus size={24} />
                 <span className='fs-5'>TopUp</span>
               </a>
@@ -140,7 +140,7 @@ function SideBarMenu() {
               // className={`nav-link not-act border-0 d-flex flex-row gap-4 align-items-center ${pathUrl === '/home/profile' || pathUrl === '/home/profile/details' || pathUrl === '/home/profile/details' || pathUrl === '/home/profile/details/managePhone' || pathUrl === '/home/profile/details/managePhone/addPhone' || pathUrl === '/home/profile/changePin' || pathUrl === '/home/profile/changePin/newPin' || pathUrl === '/home/profile/changePassword' ? 'active fw-bold' : ''}`}
             >
               <a className={`nav-link not-act border-0 d-flex flex-row gap-4 align-items-center ${router.asPath.includes('profile') ? 'active fw-bold':''}`}>
-              {router.asPath.includes('profile') ? <Image src={ActiveIcon} alt='activeimg' /> : null}
+                {router.asPath.includes('profile') ? <Image src={ActiveIcon} alt='activeimg' /> : null}
                 <FiUser size={24} />
                 <span className='fs-5'>Profile</span>
               </a>
@@ -148,10 +148,10 @@ function SideBarMenu() {
           </li>
         </ul>
         <div className='ps-3 pb-4 py-4'>
-            <Button className='nav-link not-act border-0 d-flex flex-row gap-4 align-items-center bg-transparent' onClick={onLogout}>
-                <FiLogOut size={24} />
-                <span className='fs-5'>Log out</span>
-              </Button>
+          <Button className='nav-link not-act border-0 d-flex flex-row gap-4 align-items-center bg-transparent' onClick={onLogout}>
+            <FiLogOut size={24} />
+            <span className='fs-5'>Log out</span>
+          </Button>
         </div>
       </div>
     </Col>

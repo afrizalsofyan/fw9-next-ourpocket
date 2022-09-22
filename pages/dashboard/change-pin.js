@@ -65,7 +65,7 @@ function ChangePin() {
         // }else{
         //   window.alert('Pin not match with your pin now !!!');
         // }
-        router.push('/dashboard/profile/change-new-pin')
+        router.push('/dashboard/profile/change-new-pin');
       } else {
         window.alert('Please input with only number !!!');
       }

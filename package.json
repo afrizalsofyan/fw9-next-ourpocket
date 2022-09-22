@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint-fix": "eslint */** -c .eslintrc.json --fix --ext js,jsx"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.4",

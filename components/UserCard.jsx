@@ -6,16 +6,16 @@ export const UserCard = ({url, imgProfile, name, phone }) => {
   return (
     <Link href={url} className='link-rm-line color-text-primary'>
       <div className='d-flex flex-column align-items-center flex-sm-row justify-content-between'>
-          <div className='d-flex flex-column flex-sm-row align-items-center gap-3'>
-            <div>
-              {imgProfile}
-            </div>
-            <div className='d-flex flex-column justify-content-center align-items-center align-items-md-start'>
-              <span className='fw-semibold color-text-6'>{name}</span>
-              <span className='fw-light bg-grey-light'>{phone}</span>
-            </div>
+        <div className='d-flex flex-column flex-sm-row align-items-center gap-3'>
+          <div>
+            {imgProfile}
+          </div>
+          <div className='d-flex flex-column justify-content-center align-items-center align-items-md-start'>
+            <span className='fw-semibold color-text-6'>{name}</span>
+            <span className='fw-light bg-grey-light'>{phone}</span>
           </div>
         </div>
+      </div>
     </Link>
   );
 };
@@ -49,17 +49,17 @@ function UserCardHistoryIncreaseAmount({ imgProfile, alt, name, type_transaction
           {/* <Image className='we-3' src={img_path} alt={alt} width={60} height={60}  /> */}
         </div>
         <div className='d-flex flex-column justify-content-center'>
-            <span className='fw-semibold'>{name}</span>
+          <span className='fw-semibold'>{name}</span>
           <div className='d-flex gap-1 align-items-center justify-content-center'>
             <span className='fw-light bg-grey-light'>{type_transaction}</span>
             <span className='fw-light bg-grey-light'>•</span>
-          <span className='fw-light fs-6 bg-grey-light'>{time_transaction}</span>
+            <span className='fw-light fs-6 bg-grey-light'>{time_transaction}</span>
           </div>
         </div>
       </div>
       <div className='d-flex flex-column'>
-        <span className={`fw-bold fs-5 ${status_transaction === 'success' ? 'color-green' : status_transaction === 'pending' ? 'text-warning' : 'color-red'}`}>{amount}</span>
-        <span className={`fw-light text-end ${status_transaction === 'success' ? 'text-success' : status_transaction === 'pending' ? 'text-warning' : 'text-danger'}`}>{`${status_transaction}`}</span>
+        <span className={`fw-bold fs-5 ${(status_transaction === 'success'&&type_transaction ==='accept') ? 'color-green' : status_transaction === 'pending' ? 'text-warning' : 'color-red'}`}>{amount}</span>
+        <span className={`fw-light text-end ${(status_transaction === 'success'&&type_transaction ==='accept') || (status_transaction === 'success'&&type_transaction ==='topup') ? 'text-success' : status_transaction === 'pending' ? 'text-warning' : 'text-danger'}`}>{`${status_transaction}`}</span>
 
       </div>
     </div>

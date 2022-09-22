@@ -14,8 +14,8 @@ const EditProfileForm = ({handleSubmit, handleChange}) => {
   // const dispatch = useDispatch();
   // const token = useSelector((state)=>state.auth.token);
   const profile = useSelector((state)=>state.user.results);
-  const [dataFirstName, setDataFirstName] = React.useState(profile.firstName);
-  const [dataLastName, setDataLastName] = React.useState(profile.lastName);
+  const [dataFirstName, setDataFirstName] = React.useState(profile?.firstName);
+  const [dataLastName, setDataLastName] = React.useState(profile?.lastName);
   // React.useEffect(()=>{
   //   dispatch(getProfile(token));
   // }, [dispatch, token]);
@@ -74,11 +74,10 @@ function EditProfile() {
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useSelector((state)=>state.user.results);
-  const [image, setImage] = React.useState(null)
+  const [image, setImage] = React.useState(null);
 
-  
   const onSubmitEditProfile = (val) => {
-    const dataPicture = {id: user.id, picture: image }
+    const dataPicture = {id: user.id, picture: image };
     if(image){
       dispatch(updatePhotoProfile(dataPicture));
     }
@@ -92,8 +91,15 @@ function EditProfile() {
   };
 
   const handleUploudPhoto = (e) => {
-    setImage(e.target.files[0])
-  }
+    setImage(e.target.files[0]);
+  };
+
+  React.useEffect(()=> {
+    if(image?.size > 1000 * 1000){
+      window.alert('File to big.');
+      setImage(null);
+    }
+  },[image]);
   return (
     <>
       <ProfileLayout
@@ -101,13 +107,13 @@ function EditProfile() {
         subtitleText="Here you can edit or update your personal information data's. Just click in the field and edit your data's."
         child={
           <div className='d-flex flex-column gap-4'>
-           <Form onSubmit={onSubmitEditProfile}>
+            <Form onSubmit={onSubmitEditProfile}>
               <div className='d-flex justify-content-center'>
                 <div className='d-flex flex-column align-items-center'>
                   
-                    {user?.image != null ?<div className='w-25'> <Image src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${user.image}`} alt={user.firstName + ' '+user.lastName} width={100} height={140} className='rounded-4'/> </div>: 
-                            <div className='mx-auto'><FcManager size={150} bbox={100} className='border rounded-circle'/></div>}
-                    {/* <Image src={`http://${profile.photo_url}`} alt={profile.first_name} fluid className='rounded-4'/> */}
+                  {user?.image != null ?<div className='w-25'> <Image src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${user.image}`} alt={user.firstName + ' '+user.lastName} width={100} height={140} className='rounded-4'/> </div>: 
+                    <div className='mx-auto'><FcManager size={150} bbox={100} className='border rounded-circle'/></div>}
+                  {/* <Image src={`http://${profile.photo_url}`} alt={profile.first_name} fluid className='rounded-4'/> */}
                   
                   <Form.Group controlId='formFile' className='my-3  text-center'>
                     <Form.Label className='color-text-2'>Update Photo</Form.Label>
@@ -115,7 +121,7 @@ function EditProfile() {
                   </Form.Group>
                 </div>
               </div>
-           </Form>
+            </Form>
             <Formik onSubmit={onSubmitEditProfile} initialValues={{firstName: '', lastName: ''}}>
               {(props) => <EditProfileForm {...props} />}
             </Formik>

@@ -10,7 +10,7 @@ import {
 import { MenuNavbar } from './SideBarMenu';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { FcManager } from "react-icons/fc";
+import { FcManager } from 'react-icons/fc';
 import Head from 'next/head';
 import { getProfile } from '../redux/actionAsync/profile';
 import Cookie from 'js-cookie';
@@ -63,7 +63,7 @@ function NavbarDashboard({ titlePage }) {
                     {profile?.image !== null ? <Image src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${profile?.image}`} alt={fullNameUser} width={55} height={55} className='rounded-3 img-fluid'/> : <FcManager size={60}/>}
                   </div>
                   <div className='d-flex flex-column color-text-2'>
-                     <span className='fw-bold'>{fullNameUser}</span>
+                    <span className='fw-bold'>{fullNameUser}</span>
                     <span className='fw-light'>{profile?.noTelp}</span>
                   </div>
                 </a>
@@ -86,7 +86,7 @@ function NavbarDashboard({ titlePage }) {
                         amount={el.amount}
                       />
                     </>
-                  )
+                  );
                 })}
               </DropdownButton>
               <MenuNavbar />

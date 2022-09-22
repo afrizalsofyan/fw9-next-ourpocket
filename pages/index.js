@@ -14,7 +14,7 @@ import Logo4 from '../public/assets/icons/company_logo4.svg';
 import Logo5 from '../public/assets/icons/company_logo5.svg';
 import Logo6 from '../public/assets/icons/company_logo6.svg';
 import { FiDownload, FiLock, FiPhone } from 'react-icons/fi';
-import React from "react";
+import React from 'react';
 
 export class CardLandingPage extends React.Component {
   state = {
@@ -130,7 +130,7 @@ export default function Home() {
               <Link
                 href='/login'
                 
-                >
+              >
                 <a className='btn-custom-white mar-r-20 link-rm-line'>Login</a>
               </Link>
               <Link

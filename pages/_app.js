@@ -1,5 +1,5 @@
 import '../styles/style.css';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
 import { store,persistor } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </PersistGate>
     </Provider>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

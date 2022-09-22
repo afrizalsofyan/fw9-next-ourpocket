@@ -19,13 +19,13 @@ export const PhoneForm = ({errors, handleSubmit, handleChange}) => {
     <Form noValidate onSubmit={handleSubmit} onChange={handleChange}>
       <InputGroup>
         <InputGroup.Text className={`bg-input-group rounded-0 ${!!errors.phoneSchema === true ? 'border-danger' : null}`}>
-        <FiPhone size={24} className='color-text-6' />
-            <span className='ms-2 fw-bold color-text-6'>+62</span>
+          <FiPhone size={24} className='color-text-6' />
+          <span className='ms-2 fw-bold color-text-6'>+62</span>
         </InputGroup.Text>
         <Form.Control className='cstm-border rounded-0 color-text-6' value={phoneNum} onChange={(e)=>setPhoneNum(e.currentTarget.value)} name='phoneNumber' type='text' placeholder='Enter your phone number' isInvalid={!!errors.phoneSchema} />
         <Form.Control.Feedback type='invalid'>
-            {errors.phoneSchema}
-          </Form.Control.Feedback>
+          {errors.phoneSchema}
+        </Form.Control.Feedback>
       </InputGroup>
       <div className='d-grid px-5 my-5'>
         <ButtonSubmit textButton={user?.noTelp == null ? 'Add Phone Number' : 'Update Phone Number'} buttonType={'sm'}/>

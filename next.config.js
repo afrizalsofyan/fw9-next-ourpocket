@@ -60,7 +60,7 @@ const nextConfig = {
         source: '/dashboard/profile/manage-phone',
         destination: '/dashboard/manage-phone'
       },
-    ]
+    ];
   },
   // async redirect () {
   //   return [
@@ -70,13 +70,13 @@ const nextConfig = {
   //   ]
   // }
   env: {
-    BASE_URL: 'https://fazzpay.herokuapp.com'
+    BASE_URL: 'https://fazzpay-9dn2jaz6f-bagusth15.vercel.app'
   },
   images: {
     domains:[
       'res.cloudinary.com'
     ]
   }
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

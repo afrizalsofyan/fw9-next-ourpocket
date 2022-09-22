@@ -13,7 +13,7 @@ function DetailTransferList() {
   const profile = useSelector((state)=>state.user.results);
   const transferData = useSelector((state)=> state.transaction.dataTransfer);
   const amountToMoney = convertMoney(transferData.amount);
-  const balanceLeft = profile?.balance - transferData.amount
+  const balanceLeft = profile?.balance;
   return (
     <div className='d-flex flex-column gap-3'>
       <CardDetailList title={'Amount'} content={amountToMoney}/>

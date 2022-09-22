@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 // };
 
 const PrivateRoute = ({children}) => {
-  const route = useRouter()
+  const route = useRouter();
   const token = useSelector((state)=>state.auth.token);
   if(token){
     return children;

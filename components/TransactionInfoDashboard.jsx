@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { CardHistoryDashboard } from './CardDetailList';
 import { getProfile } from '../redux/actionAsync/profile';
 // import Datadummy from '../helpers/dummydata.json';
-import Cookie from 'js-cookie'
+import Cookie from 'js-cookie';
 import { connect } from 'react-redux';
 import Image from 'next/image';
 import { FcSurvey } from 'react-icons/fc';
@@ -36,8 +36,8 @@ class TransactionInfoDashboard extends React.Component {
             {this.props.history !== undefined ? this.props.history?.data?.map((el)=>{
               return(
                 <CardHistoryDashboard 
-                imgUrl= {el?.image !== null ? <Image src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${el?.image}`} alt={el.firstName} width={50} height={50} className='rounded-3'/> : <FcSurvey size={60}/>}
-                type={el.status} amount={el.amount} name={`${el.firstName} ${el.lastName}`} status={el.status} key={el.id}/>
+                  imgUrl= {el?.image !== null ? <Image src={`https://res.cloudinary.com/dd1uwz8eu/image/upload/v1653276449/${el?.image}`} alt={el.firstName} width={50} height={50} objectFit='cover' className='rounded-3'/> : <FcSurvey size={60}/>}
+                  type={el.type} amount={el.amount} name={`${el.firstName} ${el.lastName}`} status={el.status} key={el.id}/>
               );
             }):<div className='d-flex flex-column align-items-center justify-content-center text-center'><p className=''>No Transction</p></div>}
           </div>
@@ -49,13 +49,13 @@ class TransactionInfoDashboard extends React.Component {
 
 const mapStateToProps = (state) => ({
   history: state.transaction.results
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
   historyTransaction: () => {
-    const data = {page: 1, limit: 3, filter: 'MONTH'}
-    dispatch(historyTransaction(data))
+    const data = {page: 1, limit: 3, filter: 'MONTH'};
+    dispatch(historyTransaction(data));
   }
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransactionInfoDashboard);

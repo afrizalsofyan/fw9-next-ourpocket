@@ -1,6 +1,25 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    
+    "indent": [
+      "error",
+      2
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "semi": [
+      2,
+      "always"
+    ],
+    "jsx-quotes": [
+      2,
+      "prefer-single"
+    ]
   }
 }

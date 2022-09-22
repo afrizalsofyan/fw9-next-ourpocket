@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 function Login2() {
   return (
     <div>Login2</div>
-  )
+  );
 }
 
-export default Login2
+export default Login2;
 
 
 // import React, { useState } from "react";

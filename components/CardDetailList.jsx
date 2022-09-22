@@ -1,24 +1,27 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import { convertMoney } from './DetailTransferList';
 
 export const CardHistoryDashboard = ({imgUrl, name, type, status, amount}) => {
   return (
-    <div className='d-flex flex-column gap-3 gap-sm-0 flex-sm-row justify-content-between shadow-sm p-3'>
-      <div className='d-flex gap-3 w-100'>
+    <div className='d-flex flex-column gap-3 gap-sm-0 flex-sm-row justify-content-between shadow-sm p-3 w-100'>
+      <div className='d-flex gap-3'>
         <div>
           {imgUrl}
         </div>
-        <div className='d-flex flex-column justify-content-center'>
+        <div className='d-flex flex-column justify-content-center fs-7'>
           <span className='fw-semibold text-break'>{name}</span>
           <span className='fw-light bg-grey-light'>
             {type}
           </span>
         </div>
       </div>
-      <div className='w-50 d-flex align-items-center justify-content-end'>
-        <span className={`text-end fw-bold fs-6 ${status === 'failed' ? 'color-red' : 'color-green'}`}>
-          {type === 'transfer' ? `- ${amount}` : `+ ${amount}`}
-        </span>
+      <div className='d-flex align-items-center'>
+        <div className='w-100 text-truncate'>
+          <span className={`text-end fw-bold fs-7  ${(type === 'send' && status === 'success') || (type === 'send' && status === 'failed') || (type === 'topup' && status === 'failed') ? 'color-red' : (type === 'topup' && status === 'pending') ? 'text-warning' : 'color-green'}`}>
+            {(type === 'send' && status === 'success') ? `- ${convertMoney(amount)}` : `+ ${convertMoney(amount)}`}
+          </span>
+        </div>
       </div>
     </div>
   );

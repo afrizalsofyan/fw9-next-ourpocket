@@ -10,20 +10,20 @@ export const ProfileLayout = ({headerText, subtitleText, child}) => {
     <>
       <DashboardLayout>
         <ContentLayout
-              child={
-                <>
-                  <div className='d-flex flex-column gap-5'>
-                    <div className='w-75 px-2'>
-                      <div className='d-flex flex-column gap-4 w-75 color-text-2'>
-                        <span className='fw-bold fs-5'>{headerText}</span>
-                        <span className='fnt-desc2'><span className='color-text-2'>{subtitleText}</span></span>
-                      </div>
-                    </div>
-                    {child}
+          child={
+            <>
+              <div className='d-flex flex-column gap-5'>
+                <div className='w-75 px-2'>
+                  <div className='d-flex flex-column gap-4 w-75 color-text-2'>
+                    <span className='fw-bold fs-5'>{headerText}</span>
+                    <span className='fnt-desc2'><span className='color-text-2'>{subtitleText}</span></span>
                   </div>
-                </>
-              }
-            />
+                </div>
+                {child}
+              </div>
+            </>
+          }
+        />
       </DashboardLayout>
     </>
   );

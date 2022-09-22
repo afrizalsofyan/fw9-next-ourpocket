@@ -7,6 +7,9 @@ body{
     font-style: normal !important;
     background: #EFFFFD !important;
 }
+.fs-7{
+    font-size: 14px;
+}
 input.search-focus-input:focus{
     border: 1px solid #007c92 !important;
 }

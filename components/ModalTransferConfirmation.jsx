@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { checkPin } from '../redux/actionAsync/profile';
 import { useRouter } from 'next/router';
 import { transferTransaction } from '../redux/actionAsync/transaction';
-import { addTransfer } from '../redux/reducers/transaction';
 
 const ChangePinForm = ({ errors, handleChange, handleSubmit, show, hide }) => {
   return (
@@ -81,12 +80,13 @@ const ChangePinForm = ({ errors, handleChange, handleSubmit, show, hide }) => {
 
 function ModalTransferConfirmation({ show, onHide, id }) {
   const dispatch = useDispatch();
-  const router = useRouter()
-  const errorMsg = useSelector((state)=>state.profile.errorMsg);
+  const router = useRouter();
+  const errorMsg = useSelector((state)=>state.profile.errorMsgPin);
+  const successMsg = useSelector((state)=>state.profile.successMsgPin);
   const errorTransferMsg = useSelector((state)=>state.transaction.errorMsg);
-  const [pin, setPin] = React.useState();
+  const [errorPin, setErrorPin] = React.useState();
   const transferData = useSelector((state)=> state.transaction.dataTransfer);
-  const data = {recipient: router.query.idUser, amount: transferData.amount, notes: transferData.notes}
+  const data = {recipient: router.query.idUser, amount: transferData.amount, notes: transferData.notes};
 
   const onSubmitPin = (val) => {
     if(val.pin[0] === '' || val.pin[1] === '' || val.pin[2] === '' || val.pin[3] === '' || val.pin[4] === '' || val.pin[5] === ''){
@@ -94,47 +94,29 @@ function ModalTransferConfirmation({ show, onHide, id }) {
     } else {
       if (isNaN(parseInt(val.pin[0])) === false && isNaN(parseInt(val.pin[1])) === false && isNaN(parseInt(val.pin[2])) === false && isNaN(parseInt(val.pin[3])) === false && isNaN(parseInt(val.pin[4])) === false && isNaN(parseInt(val.pin[5])) === false){
         const finalPin = val.pin.join('');
-        // setPin(finalPin);
         dispatch(checkPin(finalPin));
-        // setTimeout(() => {
-        //   if(errorMsg) {
-        //     router.push('/dashboard/failed-transfer')
-        //   } else {
-        //     dispatch(transferTransaction(data));
-        //     if(errorTransferMsg){
-        //       dispatch(addTransfer(data))
-        //       router.push('/dashboard/failed-transfer');
-        //     } else {
-        //       router.push('/dashboard/success-transfer');
-        //     }
-        //   }
-        // }, 3000);
-        // if (parseInt(finalPin) === checkP in) { 
-        //   // redirect(`/home/transfer/${id}/transfer-confirmation/success`);
-        // } else { 
-        //   // redirect(`/home/transfer/${id}/transfer-confirmation/failed`);
-        // }
+        if (errorMsg){
+          setErrorPin(false);
+        } else {
+          setErrorPin(true);
+        }
       } else {
         window.alert('Please input with only number !!!');
       }
     }
   };
 
-  React.useEffect(()=>{
-    if(errorMsg) {
-      router.push('/dashboard/failed-transfer')
-    } else {
+  React.useEffect(()=> {
+    console.log(errorMsg);
+    console.log(successMsg);
+    if(errorMsg != null && successMsg == null) {
+      router.push('/dashboard/failed-transfer');
+    } else if(errorMsg == null && successMsg != null) {
+      // console.log('a')
       dispatch(transferTransaction(data));
-      if(errorTransferMsg){
-        dispatch(addTransfer(data))
-        router.push('/dashboard/failed-transfer');
-      } else {
-        router.push('/dashboard/success-transfer');
-      }
+      router.push('/dashboard/success-transfer');
     }
-    // setTimeout(() => {
-    // }, 5000);
-  }, [pin, data, dispatch])
+  }, [errorMsg, successMsg]);
   
   return (
     <Formik

@@ -131,7 +131,7 @@ function ChangePassword() {
       const data = {id: user.id, currentPassword: val.currentPassword, newPassword: val.newPassword, repeatPassword: val.repeatPassword};
       dispatch(changePassword(data));
       if(!errorMsg){
-        router.push('/dashboard/profile')
+        router.push('/dashboard/profile');
       }
       // redirect('/home/profile/details');
     }
@@ -143,7 +143,7 @@ function ChangePassword() {
         subtitleText='You must enter your current password and then type your new password twice.'
         child={
           <>
-          {errorMsg && <Alert variant='danger'>{errorMsg}</Alert>}
+            {errorMsg && <Alert variant='danger'>{errorMsg}</Alert>}
             <Formik
               onSubmit={onSubmitPassword}
               initialValues={{ currentPassword: '', newPassword: '', repeatPassword: '' }}
